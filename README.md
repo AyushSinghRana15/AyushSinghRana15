@@ -9,10 +9,32 @@
 
 ## 🚀 About Me
 
-- 🔭 Building AI that will *definitely* take your job
-- 🤖 Exploring LLMs, AI agents, and real-world ML applications
-- 📊 Building models that actually work outside of notebooks (mostly)
-- 🌱 Currently exploring how to make AI lazier than me
+<table>
+  <tr>
+    <td width="60">
+      <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f52d.png" width="50"/>
+    </td>
+    <td><b>Building AI that will <i>definitely</i> take your job</b><br/><sub>No seriously, I'd start updating your resume.</sub></td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f916.png" width="50"/>
+    </td>
+    <td><b>LLMs, AI agents, and real-world ML</b><br/><sub>Exploring the stuff that actually works outside of notebooks.</sub></td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4ca.png" width="50"/>
+    </td>
+    <td><b>Building models that work in production</b><br/><sub>Mostly. Sometimes. On a good day.</sub></td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f331.png" width="50"/>
+    </td>
+    <td><b>Currently exploring how to make AI lazier than me</b><br/><sub>It's a tough race but I'm winning so far.</sub></td>
+  </tr>
+</table>
 
 ---
 
