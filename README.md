@@ -41,7 +41,7 @@
 ## 🛠️ Tech Arsenal
 
 <div align="center">
-  <img src="https://skillicons.dev/icons?i=python,pytorch,tensorflow,sklearn,flask,git,cpp,java,matlab,r" />
+  <img src="https://skillicons.dev/icons?i=python,pytorch,tensorflow,sklearn,flask,fastapi,git,cpp,java,docker" />
 </div>
 
 
