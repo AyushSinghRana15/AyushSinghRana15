@@ -16,15 +16,11 @@
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Tech Arsenal
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
-![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white)
-![ChatGPT](https://img.shields.io/badge/ChatGPT-74AA9C?style=for-the-badge&logo=openai&logoColor=white)
-![Ctrl+C](https://img.shields.io/badge/Ctrl%2BC-Copy-3178C6?style=for-the-badge&logo=windows-terminal&logoColor=white)
-![Ctrl+V](https://img.shields.io/badge/Ctrl%2BV-Paste-3178C6?style=for-the-badge&logo=windows-terminal&logoColor=white)
-![Coffee](https://img.shields.io/badge/Coffee-2C2C2C?style=for-the-badge&logo=buy-me-a-coffee&logoColor=white)
+<div align="center">
+  <img src="https://skillicons.dev/icons?i=python,pytorch,fastapi,nodejs,react,nextjs,ts,tailwind,html,css,postgres,redis,docker" />
+</div>
 
 
 
