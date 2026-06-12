@@ -10,8 +10,8 @@
 ## 🚀 About Me
 
 - 🔭 Building AI that will *definitely* take your job
-- 🤖 Trained a model to write comments. It wrote this one.
-- 📊 My models achieve 99.9% accuracy — on the training set
+- 🤖 Exploring LLMs, AI agents, and real-world ML applications
+- 📊 Building models that actually work outside of notebooks (mostly)
 - 🌱 Currently exploring how to make AI lazier than me
 
 ---
