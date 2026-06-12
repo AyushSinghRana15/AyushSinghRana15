@@ -20,20 +20,7 @@
 
 `Python` `PyTorch` `TensorFlow` `ChatGPT` `Ctrl+C` `Ctrl+V` `Coffee`
 
----
 
-## 🌟 Featured Projects
-
-### 💹 FinRisk
-Predicts stock crashes 5 minutes after they happen.
-
-### 🖼️ AI Image Restoration
-Turns 2 pixels into a vaguely plausible face.
-
-### 📈 Stock Predictor
-Guaranteed to be wrong, consistently.
-
----
 
 ## 📊 GitHub Stats
 
