@@ -24,13 +24,8 @@
 
 ## ⏰ Coding Stats
 
-```
-TypeScript   3 hrs 27 mins         █████████░░░░░░░░░░░░░░░░   36.50 %
-Python       2 hrs 30 mins         ██████▓░░░░░░░░░░░░░░░░░░   26.49 %
-Other        1 hr 5 mins           ███░░░░░░░░░░░░░░░░░░░░░░   11.61 %
-Markdown     1 hr 5 mins           ███░░░░░░░░░░░░░░░░░░░░░░   11.59 %
-Bash         25 mins               █░░░░░░░░░░░░░░░░░░░░░░░░   04.41 %
-```
+<!--START_SECTION:waka-->
+<!--END_SECTION:waka-->
 
 ---
 
