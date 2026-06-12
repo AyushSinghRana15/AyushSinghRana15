@@ -1,8 +1,8 @@
-<h1 align="center">Hi 👋, I'm Ayush Singh</h1>
-<h3 align="center">AI Developer Who Writes Code That Sometimes Compiles</h3>
+<h1 align="center">やあ ✨ Ayush Singh</h1>
+<h3 align="center">AI Developer ・ Code Sorcerer ・ Rice Enjoyer</h3>
 
 <p align="center">
-  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=2000&pause=500&color=FF00FF&center=true&vCenter=true&width=500&lines=Full-Stack+AI+Overlord;Machine+Learning+Wizard;Professional+Stack+Overflow+Copier;Your+Favorite+Developer%3Fs+Favorite+Developer" />
+  <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&size=22&duration=2000&pause=500&color=FF00FF&center=true&vCenter=true&width=600&lines=The+Protagonist+of+This+Repo;AI+Overlord+%28Self-Proclaimed%29;Full-Stack+Weeb+%2B+Dev;Powered+by+Coffee+and+Plot+Armor" />
 </p>
 
 ---
