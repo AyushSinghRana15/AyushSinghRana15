@@ -1,4 +1,4 @@
-<h1 align="center">やあ ✨ Ayush Singh</h1>
+<h1 align="center">प्रणाम ✨ Ayush Singh</h1>
 <h3 align="center">AI Developer ・ Code Sorcerer ・ Rice Enjoyer</h3>
 
 <p align="center">
