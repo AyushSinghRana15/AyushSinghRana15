@@ -20,14 +20,7 @@
 
 `Python` `PyTorch` `TensorFlow` `ChatGPT` `Ctrl+C` `Ctrl+V` `Coffee`
 
----
 
-## ⏰ Coding Stats
-
-<!--START_SECTION:waka-->
-<!--END_SECTION:waka-->
-
----
 
 ## 📊 GitHub Stats
 
