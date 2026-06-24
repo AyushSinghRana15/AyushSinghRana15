@@ -28,7 +28,7 @@
   <g text-anchor="middle">
     <text x="340" y="32" class="text">LLM Systems + AI Agents<animate attributeName="opacity" values="1;1;0;0;0;1" keyTimes="0;0.25;0.33;0.66;0.92;1" dur="9s" repeatCount="indefinite" /></text>
     <text x="340" y="32" class="text" opacity="0">Applied ML That Ships<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.25;0.33;0.58;0.66;1" dur="9s" repeatCount="indefinite" /></text>
-    <text x="340" y="32" class="text" opacity="0">Python, PyTorch, FastAPI<animate attributeName="opacity" values="0;0;0;0;1;1" keyTimes="0;0.55;0.62;0.66;0.74;1" dur="9s" repeatCount="indefinite" /></text>
+    <text x="340" y="32" class="text" opacity="0">Python, TensorFlow, FastAPI<animate attributeName="opacity" values="0;0;0;0;1;1" keyTimes="0;0.55;0.62;0.66;0.74;1" dur="9s" repeatCount="indefinite" /></text>
   </g>
 
   <text x="340" y="51" text-anchor="middle" class="muted">practical experiments, clean systems, useful outcomes</text>

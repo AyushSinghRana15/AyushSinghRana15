@@ -26,7 +26,7 @@
     </td>
     <td align="center" width="220">
       <b>Core Stack</b><br/>
-      <sub>Python · PyTorch · FastAPI</sub>
+      <sub>Python · TensorFlow · FastAPI</sub>
     </td>
     <td align="center" width="220">
       <b>Build Style</b><br/>
@@ -71,7 +71,7 @@
 ## 🛠️ Tech Arsenal
 
 <div align="center">
-  <img src="https://skillicons.dev/icons?i=python,pytorch,tensorflow,sklearn,flask,fastapi,git,cpp,java,docker" />
+  <img src="https://skillicons.dev/icons?i=python,tensorflow,sklearn,flask,fastapi,git,cpp,java,docker" />
 </div>
 
 
