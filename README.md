@@ -1,7 +1,37 @@
-<table>
+<div align="center">
+  <img src="assets/profile.svg" width="136" height="136" alt="Ayush Singh profile avatar" />
+
+  <h1>Ayush Singh</h1>
+
+  <p>
+    <strong>AI/ML Developer</strong> building practical LLM systems, agent workflows, and production-minded machine learning.
+  </p>
+
+  <img src="assets/hero-motion.svg" width="680" alt="LLMs, AI agents, applied machine learning, and production systems" />
+
+  <p>
+    <a href="https://github.com/AyushSinghRana15?tab=repositories">
+      <img alt="Explore projects" src="https://img.shields.io/badge/Projects-Explore-2f81f7?style=flat-square&logo=github" />
+    </a>
+    <img alt="Focus: LLMs and agents" src="https://img.shields.io/badge/Focus-LLMs%20%2B%20Agents-16a34a?style=flat-square" />
+    <img alt="Builds: production ML" src="https://img.shields.io/badge/Builds-Production%20ML-6f42c1?style=flat-square" />
+  </p>
+</div>
+
+<table align="center">
   <tr>
-    <td><img src="assets/profile.svg" width="120" height="120" /></td>
-    <td><h1>Ayush Singh · AI/ML Developer</h1></td>
+    <td align="center" width="220">
+      <b>Currently</b><br/>
+      <sub>Exploring AI agents and LLM tooling</sub>
+    </td>
+    <td align="center" width="220">
+      <b>Core Stack</b><br/>
+      <sub>Python · PyTorch · FastAPI</sub>
+    </td>
+    <td align="center" width="220">
+      <b>Build Style</b><br/>
+      <sub>Useful, clean, and production-aware</sub>
+    </td>
   </tr>
 </table>
 
@@ -14,25 +44,25 @@
     <td width="60">
       <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f52d.png" width="50"/>
     </td>
-    <td><b>Building AI that will <i>definitely</i> take your job</b><br/><sub>No seriously, I'd start updating your resume.</sub></td>
+    <td><b>Building practical AI systems</b><br/><sub>LLM apps, agent workflows, and ML projects that can leave the notebook.</sub></td>
   </tr>
   <tr>
     <td>
       <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f916.png" width="50"/>
     </td>
-    <td><b>LLMs, AI agents, and real-world ML</b><br/><sub>Exploring the stuff that actually works outside of notebooks.</sub></td>
+    <td><b>LLMs, AI agents, and real-world ML</b><br/><sub>Curious about systems that are useful, measurable, and easy to iterate.</sub></td>
   </tr>
   <tr>
     <td>
       <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4ca.png" width="50"/>
     </td>
-    <td><b>Building models that work in production</b><br/><sub>Mostly. Sometimes. On a good day.</sub></td>
+    <td><b>Production-minded experiments</b><br/><sub>Training, evaluating, and shipping with fewer mystery failures.</sub></td>
   </tr>
   <tr>
     <td>
       <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f331.png" width="50"/>
     </td>
-    <td><b>Currently exploring how to make AI lazier than me</b><br/><sub>It's a tough race but I'm winning so far.</sub></td>
+    <td><b>Always learning in public</b><br/><sub>Trying to turn ideas into small, working things before they get too precious.</sub></td>
   </tr>
 </table>
 

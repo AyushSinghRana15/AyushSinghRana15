@@ -1,13 +1,63 @@
-<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+<svg width="136" height="136" viewBox="0 0 136 136" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Ayush Singh avatar</title>
+  <desc id="desc">Self-contained animated hex monogram with a soft rotating gradient ring.</desc>
   <defs>
+    <linearGradient id="base" x1="22" y1="18" x2="112" y2="122" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0f172a" />
+      <stop offset="0.45" stop-color="#102a43" />
+      <stop offset="1" stop-color="#111827" />
+    </linearGradient>
+    <radialGradient id="blueGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(45 38) rotate(54) scale(74)">
+      <stop stop-color="#2f81f7" stop-opacity="0.72" />
+      <stop offset="1" stop-color="#2f81f7" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="greenGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(94 96) rotate(54) scale(70)">
+      <stop stop-color="#16a34a" stop-opacity="0.52" />
+      <stop offset="1" stop-color="#16a34a" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="ring" x1="14" y1="14" x2="122" y2="122" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#2f81f7" />
+      <stop offset="0.52" stop-color="#16a34a" />
+      <stop offset="1" stop-color="#a855f7" />
+      <animateTransform attributeName="gradientTransform" type="rotate" from="0 68 68" to="360 68 68" dur="10s" repeatCount="indefinite" />
+    </linearGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
     <clipPath id="hex">
-      <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" />
+      <polygon points="68 8, 124 38, 124 98, 68 128, 12 98, 12 38" />
     </clipPath>
   </defs>
-  <image href="https://github.com/AyushSinghRana15.png" x="0" y="0" width="120" height="120" clip-path="url(#hex)" />
-  <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" fill="none" stroke="#FF00FF" stroke-width="3">
-    <animate attributeName="stroke-dashoffset" from="0" to="-360" dur="3s" repeatCount="indefinite" />
-    <animate attributeName="stroke-dasharray" values="180 180" dur="1s" repeatCount="indefinite" />
+  <g clip-path="url(#hex)">
+    <rect width="136" height="136" fill="url(#base)" />
+    <circle cx="45" cy="38" r="72" fill="url(#blueGlow)">
+      <animate attributeName="opacity" values="0.7;1;0.7" dur="5s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="94" cy="96" r="72" fill="url(#greenGlow)">
+      <animate attributeName="opacity" values="0.95;0.65;0.95" dur="6s" repeatCount="indefinite" />
+    </circle>
+    <path d="M25 88 C42 69, 52 94, 68 73 S94 45, 112 60" stroke="#58a6ff" stroke-width="2.4" stroke-linecap="round" fill="none" opacity="0.5">
+      <animate attributeName="stroke-dasharray" values="0 160;80 80;160 0" dur="7s" repeatCount="indefinite" />
+    </path>
+    <g opacity="0.9">
+      <circle cx="41" cy="43" r="2.6" fill="#7dd3fc" />
+      <circle cx="97" cy="91" r="3" fill="#86efac" />
+      <circle cx="103" cy="48" r="2.2" fill="#c084fc" />
+    </g>
+  </g>
+  <text x="68" y="79" fill="#f8fafc" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="35" font-weight="800" text-anchor="middle">AS</text>
+  <text x="68" y="97" fill="#cbd5e1" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="11" font-weight="600" letter-spacing="2" text-anchor="middle">AI/ML</text>
+  <g transform-origin="68 68">
+    <circle cx="68" cy="8" r="3" fill="#7dd3fc" />
+    <animateTransform attributeName="transform" type="rotate" from="0 68 68" to="360 68 68" dur="12s" repeatCount="indefinite" />
+  </g>
+  <polygon points="68 8, 124 38, 124 98, 68 128, 12 98, 12 38" fill="none" stroke="url(#ring)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="32 10" filter="url(#glow)">
+    <animate attributeName="stroke-dashoffset" from="0" to="-168" dur="7s" repeatCount="indefinite" />
+    <animate attributeName="opacity" values="0.92;1;0.92" dur="4s" repeatCount="indefinite" />
   </polygon>
-  <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" fill="none" stroke="#FF00FF" stroke-width="3" opacity="0.3" />
+  <polygon points="68 8, 124 38, 124 98, 68 128, 12 98, 12 38" fill="none" stroke="#f0f6fc" stroke-width="1" opacity="0.22" />
 </svg>

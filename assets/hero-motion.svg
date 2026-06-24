@@ -1,0 +1,35 @@
+<svg width="680" height="74" viewBox="0 0 680 74" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Animated profile focus line</title>
+  <desc id="desc">A subtle animated line cycling through Ayush Singh's focus areas.</desc>
+  <style>
+    .pill { fill: #f6f8fa; stroke: #d0d7de; }
+    .text { fill: #24292f; font: 600 20px Inter, Segoe UI, Arial, sans-serif; letter-spacing: 0; }
+    .muted { fill: #57606a; font: 500 13px Inter, Segoe UI, Arial, sans-serif; letter-spacing: 0; }
+    @media (prefers-color-scheme: dark) {
+      .pill { fill: #0d1117; stroke: #30363d; }
+      .text { fill: #f0f6fc; }
+      .muted { fill: #8b949e; }
+    }
+  </style>
+  <defs>
+    <linearGradient id="spark" x1="96" y1="21" x2="584" y2="53" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2f81f7" />
+      <stop offset="0.5" stop-color="#16a34a" />
+      <stop offset="1" stop-color="#a855f7" />
+      <animateTransform attributeName="gradientTransform" type="translate" values="-120 0;120 0;-120 0" dur="8s" repeatCount="indefinite" />
+    </linearGradient>
+  </defs>
+  <rect x="1" y="1" width="678" height="72" rx="18" class="pill" />
+  <rect x="96" y="52" width="488" height="3" rx="1.5" fill="url(#spark)" opacity="0.9">
+    <animate attributeName="width" values="360;488;420;488;360" dur="9s" repeatCount="indefinite" />
+    <animate attributeName="x" values="160;96;130;96;160" dur="9s" repeatCount="indefinite" />
+  </rect>
+
+  <g text-anchor="middle">
+    <text x="340" y="32" class="text">LLM Systems + AI Agents<animate attributeName="opacity" values="1;1;0;0;0;1" keyTimes="0;0.25;0.33;0.66;0.92;1" dur="9s" repeatCount="indefinite" /></text>
+    <text x="340" y="32" class="text" opacity="0">Applied ML That Ships<animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.25;0.33;0.58;0.66;1" dur="9s" repeatCount="indefinite" /></text>
+    <text x="340" y="32" class="text" opacity="0">Python, PyTorch, FastAPI<animate attributeName="opacity" values="0;0;0;0;1;1" keyTimes="0;0.55;0.62;0.66;0.74;1" dur="9s" repeatCount="indefinite" /></text>
+  </g>
+
+  <text x="340" y="51" text-anchor="middle" class="muted">practical experiments, clean systems, useful outcomes</text>
+</svg>
