@@ -1,6 +1,20 @@
 <table>
   <tr>
-    <td><img src="https://github.com/AyushSinghRana15.png" width="110" height="110" /></td>
+    <td>
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <defs>
+          <clipPath id="hex">
+            <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" />
+          </clipPath>
+        </defs>
+        <image xlink:href="https://github.com/AyushSinghRana15.png" x="0" y="0" width="120" height="120" clip-path="url(#hex)" />
+        <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" fill="none" stroke="#FF00FF" stroke-width="3">
+          <animate attributeName="stroke-dashoffset" from="0" to="-360" dur="3s" repeatCount="indefinite" />
+          <animate attributeName="stroke-dasharray" values="180 180;180 180" dur="1s" repeatCount="indefinite" />
+        </polygon>
+        <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" fill="none" stroke="#FF00FF" stroke-width="3" opacity="0.3" />
+      </svg>
+    </td>
     <td><h1>Ayush Singh · AI/ML Developer</h1></td>
   </tr>
 </table>
