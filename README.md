@@ -1,7 +1,7 @@
 <table>
   <tr>
     <td><img src="https://github.com/AyushSinghRana15.png" width="110" height="110" /></td>
-    <td><h1>Ayush Singh · AI Developer</h1></td>
+    <td><h1>Ayush Singh · AI/ML Developer</h1></td>
   </tr>
 </table>
 
