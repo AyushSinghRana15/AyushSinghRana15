@@ -1,8 +1,19 @@
-<div align="center">
-  <img src="https://github.com/AyushSinghRana15.png" width="100" height="100" style="border-radius: 50%; border: 3px solid #FF00FF;" />
-  <br><br>
-  <h1>Ayush Singh</h1>
-</div>
+<table>
+  <tr>
+    <td>
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <defs>
+          <clipPath id="hex">
+            <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" />
+          </clipPath>
+        </defs>
+        <image href="https://github.com/AyushSinghRana15.png" x="0" y="0" width="120" height="120" clip-path="url(#hex)" />
+        <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" fill="none" stroke="#FF00FF" stroke-width="3" />
+      </svg>
+    </td>
+    <td><h1>Ayush Singh</h1></td>
+  </tr>
+</table>
 
 ---
 
