@@ -1,18 +1,6 @@
 <table>
   <tr>
-    <td><img src="https://github.com/AyushSinghRana15.png" width="110" height="110" /></td>
-    <td>
-      <svg width="40" height="120" viewBox="0 0 40 120">
-        <circle cx="20" cy="20" r="6" fill="#FF00FF" opacity="0.8">
-          <animate attributeName="cy" values="20;100;20" dur="3s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0.8;0.2;0.8" dur="3s" repeatCount="indefinite" />
-        </circle>
-        <circle cx="20" cy="80" r="4" fill="#00FFCC" opacity="0.6">
-          <animate attributeName="cy" values="80;10;80" dur="2.5s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2.5s" repeatCount="indefinite" />
-        </circle>
-      </svg>
-    </td>
+    <td><img src="assets/profile.svg" width="120" height="120" /></td>
     <td><h1>Ayush Singh · AI/ML Developer</h1></td>
   </tr>
 </table>
