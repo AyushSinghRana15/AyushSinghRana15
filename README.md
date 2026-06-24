@@ -1,18 +1,16 @@
 <table>
   <tr>
+    <td><img src="https://github.com/AyushSinghRana15.png" width="110" height="110" /></td>
     <td>
-      <svg width="120" height="120" viewBox="0 0 120 120">
-        <defs>
-          <clipPath id="hex">
-            <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" />
-          </clipPath>
-        </defs>
-        <image xlink:href="https://github.com/AyushSinghRana15.png" x="0" y="0" width="120" height="120" clip-path="url(#hex)" />
-        <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" fill="none" stroke="#FF00FF" stroke-width="3">
-          <animate attributeName="stroke-dashoffset" from="0" to="-360" dur="3s" repeatCount="indefinite" />
-          <animate attributeName="stroke-dasharray" values="180 180;180 180" dur="1s" repeatCount="indefinite" />
-        </polygon>
-        <polygon points="60 6, 110 33, 110 87, 60 114, 10 87, 10 33" fill="none" stroke="#FF00FF" stroke-width="3" opacity="0.3" />
+      <svg width="40" height="120" viewBox="0 0 40 120">
+        <circle cx="20" cy="20" r="6" fill="#FF00FF" opacity="0.8">
+          <animate attributeName="cy" values="20;100;20" dur="3s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.8;0.2;0.8" dur="3s" repeatCount="indefinite" />
+        </circle>
+        <circle cx="20" cy="80" r="4" fill="#00FFCC" opacity="0.6">
+          <animate attributeName="cy" values="80;10;80" dur="2.5s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2.5s" repeatCount="indefinite" />
+        </circle>
       </svg>
     </td>
     <td><h1>Ayush Singh · AI/ML Developer</h1></td>
