@@ -1,8 +1,7 @@
 <div align="center">
   <img src="https://github.com/AyushSinghRana15.png" width="100" height="100" style="border-radius: 50%; border: 3px solid #FF00FF;" />
   <br><br>
-  <h1>やあ ✨ Ayush Singh</h1>
-  <h3>AI Developer ・ Code Sorcerer ・ Protagonist of Unresolved Bugs</h3>
+  <h1>Ayush Singh</h1>
 </div>
 
 ---
