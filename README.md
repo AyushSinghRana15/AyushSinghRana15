@@ -85,8 +85,8 @@
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=AyushSinghRana15&show_icons=true&theme=nightowl" height="150"/>
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=AyushSinghRana15&theme=nightowl" height="150"/>
+  <img src="https://github-readme-stats.vercel.app/api?username=AyushSinghRana15&show_icons=true&theme=nightowl&hide_border=true" height="150"/>
+  <img src="https://streak-stats.demolab.com/?user=AyushSinghRana15&theme=nightowl&hide_border=true" height="150"/>
 </p>
 
 <p align="center">
