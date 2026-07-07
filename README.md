@@ -85,8 +85,8 @@
 ## 📊 GitHub Stats
 
 <p align="center">
-  <img src="assets/github-stats.svg" width="48%"/>
-  <img src="assets/github-streak.svg" width="48%"/>
+  <img src="assets/github-stats.svg" height="150"/>
+  <img src="assets/github-streak.svg" height="150"/>
 </p>
 
 <p align="center">
