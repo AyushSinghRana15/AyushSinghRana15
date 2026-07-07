@@ -97,7 +97,7 @@ def _divider(cols, h):
     lines = ""
     for x in xs:
         lines += (
-            f'<line x1="{x}" y1="28" x2="{x}" y2="{h - 25}" '
+            f'<line x1="{x}" y1="24" x2="{x}" y2="{h - 25}" '
             f'stroke="#E4E2E2" stroke-opacity=".12" stroke-width="1" '
             f'vector-effect="non-scaling-stroke"/>'
         )
@@ -128,9 +128,9 @@ def _label(text, cx, cy, delay="0s"):
 
 def _column(cx, icon_path, val, label, num_delay, label_delay):
     return (
-        _icon(icon_path, cx - 8, 18)
-        + _big_num(val, cx, 56, delay=num_delay)
-        + _label(label, cx, 80, delay=label_delay)
+        _icon(icon_path, cx - 8, 16)
+        + _big_num(val, cx, 50, delay=num_delay)
+        + _label(label, cx, 72, delay=label_delay)
     )
 
 
@@ -172,7 +172,7 @@ CAL = (
 
 
 def stats_svg(stars, repos, followers):
-    W, H = 495, 195
+    W, H = 410, 175
     cols = [W // 6, W // 2, 5 * W // 6]
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" direction="ltr">
 {_style()}
@@ -189,7 +189,7 @@ def stats_svg(stars, repos, followers):
 
 def streak_svg(total, current, longest):
     """total, current, longest can be int or str (for placeholder)."""
-    W, H = 495, 195
+    W, H = 410, 175
     cols = [W // 6, W // 2, 5 * W // 6]
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" direction="ltr">
 {_style()}
@@ -197,8 +197,8 @@ def streak_svg(total, current, longest):
 {_bg(W, H)}
 {_divider(cols, H)}
 {_column(cols[0], CAL, total, "Total Contributions", ".4s", ".6s")}
-{_column(cols[1], FIRE, f"{current}d", "Current Streak", ".7s", ".9s")}
-{_column(cols[2], TROPHY, f"{longest}d", "Longest Streak", "1s", "1.2s")}
+{_column(cols[1], FIRE, current, "Current Streak", ".7s", ".9s")}
+{_column(cols[2], TROPHY, longest, "Longest Streak", "1s", "1.2s")}
 </g>
 <defs><clipPath id="c"><rect width="{W}" height="{H}" rx="4.5"/></clipPath></defs>
 </svg>"""
