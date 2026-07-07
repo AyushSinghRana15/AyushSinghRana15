@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 495 195" width="495" height="195" direction="ltr">
+<style>
+    @keyframes f {0%{opacity:0}to{opacity:1}}
+    @keyframes s{0%{font-size:3px;opacity:.2}80%{font-size:34px;opacity:1}to{font-size:28px;opacity:1}}
+    .a{animation:f .5s linear forwards}
+    .b{animation:s .6s linear forwards}
+</style>
+<g clip-path="url(#c)">
+<rect width="495" height="195" rx="4.5" fill="#011627" stroke="#1D3B53" stroke-width="1"/>
+<line x1="164" y1="28" x2="164" y2="170" stroke="#E4E2E2" stroke-opacity=".12" stroke-width="1" vector-effect="non-scaling-stroke"/><line x1="329" y1="28" x2="329" y2="170" stroke="#E4E2E2" stroke-opacity=".12" stroke-width="1" vector-effect="non-scaling-stroke"/>
+<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="#C792EA" transform="translate(74,18)" class="a" style="animation-delay:.3s"/><text x="82" y="56" text-anchor="middle" fill="#FFEB95" font-family="Segoe UI,Ubuntu,sans-serif" font-weight="700" font-size="28" class="a" style="animation-delay:.4s">4</text><text x="82" y="80" text-anchor="middle" fill="#7FDBCA" font-family="Segoe UI,Ubuntu,sans-serif" font-weight="400" font-size="13" class="a" style="animation-delay:.6s">Total Stars</text>
+<path d="M6 2h12a2 2 0 012 2v16a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zm0 2v16h12V4H6zm2 2h8v2H8V6zm0 4h8v2H8v-2z" fill="#C792EA" transform="translate(239,18)" class="a" style="animation-delay:.3s"/><text x="247" y="56" text-anchor="middle" fill="#FFEB95" font-family="Segoe UI,Ubuntu,sans-serif" font-weight="700" font-size="28" class="a" style="animation-delay:.7s">28</text><text x="247" y="80" text-anchor="middle" fill="#7FDBCA" font-family="Segoe UI,Ubuntu,sans-serif" font-weight="400" font-size="13" class="a" style="animation-delay:.9s">Public Repos</text>
+<path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" fill="#C792EA" transform="translate(404,18)" class="a" style="animation-delay:.3s"/><text x="412" y="56" text-anchor="middle" fill="#FFEB95" font-family="Segoe UI,Ubuntu,sans-serif" font-weight="700" font-size="28" class="a" style="animation-delay:1s">1</text><text x="412" y="80" text-anchor="middle" fill="#7FDBCA" font-family="Segoe UI,Ubuntu,sans-serif" font-weight="400" font-size="13" class="a" style="animation-delay:1.2s">Followers</text>
+</g>
+<defs><clipPath id="c"><rect width="495" height="195" rx="4.5"/></clipPath></defs>
+</svg>
