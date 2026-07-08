@@ -84,10 +84,10 @@
 
 ## 📊 GitHub Stats
 
-<p align="center">
-  <img src="assets/github-stats.svg" height="150"/>
-  <img src="assets/github-streak.svg" height="150"/>
-</p>
+<div align="center">
+  <img src="assets/github-stats.svg" width="410" height="210" align="top" alt="GitHub profile stats" />
+  <img src="assets/github-streak.svg" width="410" height="210" align="top" alt="GitHub contribution streak stats" />
+</div>
 
 <p align="center">
   <i>"I don't always test my code, but when I do, I do it in production."</i>
