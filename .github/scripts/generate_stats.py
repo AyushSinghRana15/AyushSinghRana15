@@ -128,9 +128,9 @@ def _label(text, cx, cy, delay="0s"):
 
 def _column(cx, icon_path, val, label, num_delay, label_delay):
     return (
-        _icon(icon_path, cx - 8, 16)
-        + _big_num(val, cx, 50, delay=num_delay)
-        + _label(label, cx, 72, delay=label_delay)
+        _icon(icon_path, cx - 8, 18)
+        + _big_num(val, cx, 74, delay=num_delay)
+        + _label(label, cx, 100, delay=label_delay)
     )
 
 
@@ -172,7 +172,7 @@ CAL = (
 
 
 def stats_svg(stars, repos, followers):
-    W, H = 410, 175
+    W, H = 410, 210
     cols = [W // 6, W // 2, 5 * W // 6]
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" direction="ltr">
 {_style()}
@@ -189,7 +189,7 @@ def stats_svg(stars, repos, followers):
 
 def streak_svg(total, current, longest):
     """total, current, longest can be int or str (for placeholder)."""
-    W, H = 410, 175
+    W, H = 410, 210
     cols = [W // 6, W // 2, 5 * W // 6]
     return f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" direction="ltr">
 {_style()}
