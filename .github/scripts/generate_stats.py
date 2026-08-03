@@ -5,7 +5,7 @@ import os
 import json
 import urllib.request
 import urllib.error
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 
 USERNAME = "AyushSinghRana15"
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
@@ -70,6 +70,31 @@ def compute_streaks(weeks):
             run = 0
 
     return current, longest
+
+
+def contributions_for_range(from_dt, to_excl):
+    """Query total contributions + calendar weeks for [from_dt, to_excl)."""
+    gql = graphql("""
+    {
+      user(login: "%s") {
+        contributionsCollection(from: "%s", to: "%s") {
+          contributionCalendar {
+            totalContributions
+            weeks {
+              contributionDays {
+                contributionCount
+                date
+              }
+            }
+          }
+        }
+      }
+    }
+    """ % (USERNAME, from_dt, to_excl))
+    if gql and gql.get("data"):
+        cal = gql["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+        return cal["totalContributions"], cal["weeks"]
+    return None, None
 
 
 # ── SVG templates ────────────────────────────────────────
@@ -231,28 +256,31 @@ def main():
         return f"{v}{suffix}"
 
 
-    gql = graphql("""
-    {
-      user(login: "%s") {
-        contributionsCollection {
-          contributionCalendar {
-            totalContributions
-            weeks {
-              contributionDays {
-                contributionCount
-                date
-              }
-            }
-          }
-        }
-      }
-    }
-    """ % USERNAME)
+    if has_token:
+        join_date = datetime.fromisoformat(
+            user["created_at"].replace("Z", "+00:00")
+        ).astimezone(timezone.utc).date()
+        today = datetime.now(timezone.utc).date()
 
-    if gql and gql.get("data"):
-        cal = gql["data"]["user"]["contributionsCollection"]["contributionCalendar"]
-        total_contrib = cal["totalContributions"]
-        current_streak, longest_streak = compute_streaks(cal["weeks"])
+        cursor = join_date
+        recent_weeks = None
+        while cursor < today:
+            to_excl = min(
+                cursor + timedelta(days=335),
+                today + timedelta(days=1),
+            )
+            contrib, weeks = contributions_for_range(
+                f"{cursor}T00:00:00Z",
+                f"{to_excl}T00:00:00Z",
+            )
+            if contrib is None:
+                break
+            total_contrib += contrib
+            recent_weeks = weeks
+            cursor = to_excl
+
+        if recent_weeks:
+            current_streak, longest_streak = compute_streaks(recent_weeks)
 
     streak = streak_svg(
         fmt(total_contrib),
