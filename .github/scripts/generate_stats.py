@@ -61,7 +61,8 @@ def compute_streaks(weeks):
         if c > 0:
             current += 1
         else:
-            break
+            if current > 0:
+                break
 
     longest = 0
     run = 0
