@@ -53,6 +53,9 @@ def compute_streaks(weeks):
             days.append((d["date"], d["contributionCount"]))
     days.sort(key=lambda x: x[0])
 
+    if not days:
+        return 0, 0
+
     current = 0
     for _, c in reversed(days):
         if c > 0:
@@ -267,7 +270,7 @@ def main():
         while cursor < today:
             to_excl = min(
                 cursor + timedelta(days=335),
-                today + timedelta(days=1),
+                today + timedelta(days=2),
             )
             contrib, weeks = contributions_for_range(
                 f"{cursor}T00:00:00Z",
@@ -281,6 +284,8 @@ def main():
 
         if recent_weeks:
             current_streak, longest_streak = compute_streaks(recent_weeks)
+        else:
+            current_streak, longest_streak = 0, 0
 
     streak = streak_svg(
         fmt(total_contrib),
