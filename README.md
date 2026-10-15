@@ -84,10 +84,31 @@
 
 ## 📊 GitHub Stats
 
-<div align="center">
-  <img src="assets/github-stats.svg" width="410" height="210" align="top" alt="GitHub profile stats" />
-  <img src="assets/github-streak.svg" width="410" height="210" align="top" alt="GitHub contribution streak stats" />
-</div>
+<p align="center">
+  <a href="https://github.com/AyushSinghRana15?tab=repositories">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/github-stats-dark.svg" />
+      <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/github-stats-light.svg" width="49%" alt="GitHub stats: stars, public repos, followers and most used languages" />
+    </picture>
+  </a>
+  <a href="https://github.com/AyushSinghRana15">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/github-streak-dark.svg" />
+      <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/github-streak-light.svg" width="49%" alt="Contribution streak: total contributions, current streak and longest streak" />
+    </picture>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/AyushSinghRana15">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/github-activity-dark.svg" />
+      <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/github-activity-light.svg" width="98.5%" alt="Contributions per day over the last 30 days" />
+    </picture>
+  </a>
+</p>
+
+<p align="center"><sub>Cards are generated daily by a GitHub Action · click any card to explore</sub></p>
 
 <p align="center">
   <i>"I don't always test my code, but when I do, I do it in production."</i>
