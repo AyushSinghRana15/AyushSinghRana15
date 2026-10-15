@@ -1,39 +1,16 @@
 <div align="center">
-  <img src="assets/profile.svg" width="136" height="136" alt="Ayush Singh profile avatar" />
-
-  <h1>Ayush Singh</h1>
-
-  <p>
-    <strong>AI/ML Developer</strong> building practical LLM systems, agent workflows, and production-minded machine learning.
-  </p>
-
-  <img src="assets/hero-motion.svg" width="680" alt="LLMs, AI agents, applied machine learning, and production systems" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/hero-dark.svg" />
+    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/hero-light.svg" width="100%" alt="Ayush Singh, AI/ML Developer: building LLM systems and AI agents, shipping applied ML to production, exploring agent workflows" />
+  </picture>
 
   <p>
-    <a href="https://github.com/AyushSinghRana15?tab=repositories">
-      <img alt="Explore projects" src="https://img.shields.io/badge/Projects-Explore-2f81f7?style=flat-square&logo=github" />
-    </a>
-    <img alt="Focus: LLMs and agents" src="https://img.shields.io/badge/Focus-LLMs%20%2B%20Agents-16a34a?style=flat-square" />
-    <img alt="Builds: production ML" src="https://img.shields.io/badge/Builds-Production%20ML-6f42c1?style=flat-square" />
+  <a href="https://www.linkedin.com/in/ayushsinghes/"><img alt="LinkedIn" src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge" /></a>
+  <a href="https://leetcode.com/u/DevilAyush15/"><img alt="LeetCode" src="https://img.shields.io/badge/LeetCode-FFA116?style=for-the-badge&logo=leetcode&logoColor=white" /></a>
+  <a href="https://www.geeksforgeeks.org/profile/ayushsinghb764"><img alt="GeeksforGeeks" src="https://img.shields.io/badge/GeeksforGeeks-2F8D46?style=for-the-badge&logo=geeksforgeeks&logoColor=white" /></a>
+  <a href="https://github.com/AyushSinghRana15?tab=repositories"><img alt="Projects" src="https://img.shields.io/badge/Projects-2f81f7?style=for-the-badge&logo=github&logoColor=white" /></a>
   </p>
 </div>
-
-<table align="center">
-  <tr>
-    <td align="center" width="220">
-      <b>Currently</b><br/>
-      <sub>Exploring AI agents and LLM tooling</sub>
-    </td>
-    <td align="center" width="220">
-      <b>Core Stack</b><br/>
-      <sub>Python · TensorFlow · FastAPI</sub>
-    </td>
-    <td align="center" width="220">
-      <b>Build Style</b><br/>
-      <sub>Useful, clean, and production-aware</sub>
-    </td>
-  </tr>
-</table>
 
 ---
 
