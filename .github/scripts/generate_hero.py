@@ -18,13 +18,13 @@ ASSETS = os.path.join(os.path.dirname(__file__), "..", "..", "assets")
 NAME = "Ayush Singh"
 ROLE = "AI/ML Developer"
 PHRASES = [
-    "building LLM systems & AI agents",
-    "shipping applied ML to production",
-    "exploring agent workflows",
+    "engineering agent harnesses",
+    "building memory layers for agents",
+    "shipping LLM systems to production",
 ]
 CHIPS = [
-    ("Currently", "Exploring AI agents & LLM tooling"),
-    ("Stack", "Python · TensorFlow · FastAPI"),
+    ("Currently", "Agent memory & production layers"),
+    ("Stack", "Python · LangGraph · FastAPI"),
     ("Style", "Useful, clean, production-aware"),
 ]
 
@@ -91,8 +91,13 @@ def typewriter(t, x, y, size=18):
     """A '>' prompt that types and erases each phrase in turn.
 
     Uses a monospace font with textLength pinned to 0.6em per character, so
-    the clip and cursor line up whichever monospace font the viewer has.
+    the cover and cursor line up whichever monospace font the viewer has.
     Without SMIL support the first phrase is shown in full.
+
+    Only the active phrase is visible (opacity), and a background-coloured
+    cover slides right to reveal it. This avoids animated clip paths, which
+    some WebKit-based viewers (e.g. GitHub Desktop) don't apply, leaving every
+    phrase drawn on top of each other.
     """
     cw = size * .6
     x0 = x + 2 * cw
@@ -111,24 +116,32 @@ def typewriter(t, x, y, size=18):
 
     for i, p in enumerate(PHRASES):
         n = len(p)
-        mine = [(0.0, 0)] + [(tm, k * cw) for tm, j, k in events if j == i]
-        times, widths = _timeline(mine, dur)
-        base = n * cw if i == 0 else 0
+        vis = [(0.0, 0), (i * slot, 1), ((i + 1) * slot, 0)] if i else [(0.0, 1), (slot, 0)]
+        times, values = _timeline([(tm, v) for tm, v in vis if tm < dur], dur)
         out += (
-            f'<clipPath id="tw{i}"><rect x="{x0}" y="{y - size}" height="{size * 1.4}" width="{base:.1f}">'
-            f'<animate attributeName="width" calcMode="discrete" values="{widths}" keyTimes="{times}" '
-            f'dur="{dur}s" repeatCount="indefinite"/></rect></clipPath>'
             f'<text x="{x0}" y="{y}" class="mono" textLength="{n * cw:.1f}" lengthAdjust="spacingAndGlyphs" '
-            f'clip-path="url(#tw{i})">{escape(p)}</text>'
+            f'opacity="{0 if i else 1}">{escape(p)}'
+            f'<animate attributeName="opacity" calcMode="discrete" values="{values}" keyTimes="{times}" '
+            f'dur="{dur}s" repeatCount="indefinite"/></text>'
         )
 
-    # Cursor follows whichever phrase is currently on screen.
+    # The cover starts where the typed text ends; the cursor sits just after.
     shown = [0] * len(PHRASES)
-    cur = [(0.0, x0)]
+    edge = [(0.0, x0)]
     for tm, i, k in sorted(events):
         shown[i] = k
-        cur.append((tm, x0 + sum(shown) * cw + 2))
-    times, xs = _timeline(cur, dur)
+        edge.append((tm, x0 + sum(shown) * cw))
+    right = 628
+    times, xs = _timeline(edge, dur)
+    _, ws = _timeline([(tm, right - v) for tm, v in edge], dur)
+    start = x0 + len(PHRASES[0]) * cw
+    out += (
+        f'<rect x="{start:.1f}" y="{y - size}" width="{right - start:.1f}" height="{size * 1.5}" fill="{t["bg"]}">'
+        f'<animate attributeName="x" calcMode="discrete" values="{xs}" keyTimes="{times}" dur="{dur}s" repeatCount="indefinite"/>'
+        f'<animate attributeName="width" calcMode="discrete" values="{ws}" keyTimes="{times}" dur="{dur}s" repeatCount="indefinite"/>'
+        f'</rect>'
+    )
+    _, xs = _timeline([(tm, v + 2) for tm, v in edge], dur)
     out += (
         f'<rect class="cursor" x="{x0 + len(PHRASES[0]) * cw + 2:.1f}" y="{y - size + 3}" width="{cw * .9:.1f}" '
         f'height="{size + 2}" fill="{t["grad"][0]}" opacity=".85">'
@@ -207,8 +220,6 @@ def hero_svg(t, photo):
   .mono {{ font-family: {MONO}; font-size: 18px; }}
   .chip-label {{ font-size: 10px; font-weight: 700; text-transform: uppercase; }}
   .chip {{ font-size: 11.5px; fill: {t["muted"]}; }}
-  .wave {{ transform-box: fill-box; transform-origin: 70% 80%; animation: wave 2.4s ease-in-out 3; }}
-  @keyframes wave {{ 0%, 60%, 100% {{ transform: rotate(0); }} 10%, 30% {{ transform: rotate(16deg); }} 20%, 40% {{ transform: rotate(-8deg); }} }}
   .cursor {{ animation: blink 1s steps(1) infinite; }}
   @keyframes blink {{ 50% {{ opacity: 0; }} }}
   /* Final state is the default; these only play from hidden. */
@@ -231,7 +242,8 @@ def hero_svg(t, photo):
 <g class="rise">{avatar(t, photo, 36, 40, 1.12)}</g>
 
 <g class="rise" style="animation-delay:.15s">
-  <text x="{tx}" y="74" class="wave" style="font-size:20px">👋</text>
+  <text x="{tx}" y="74" style="font-size:20px">👋<animateTransform attributeName="transform" type="rotate" dur="2.4s" repeatCount="3"
+    values="0 {tx + 14} 70;16 {tx + 14} 70;-8 {tx + 14} 70;16 {tx + 14} 70;-8 {tx + 14} 70;0 {tx + 14} 70;0 {tx + 14} 70" keyTimes="0;.1;.2;.3;.4;.6;1"/></text>
   <text x="{tx + 30}" y="74" class="hi">Hi there, I'm</text>
   <text x="{tx}" y="128" class="name" style="fill:url(#nameGrad)">{NAME}</text>
   <text x="{tx}" y="160" class="role">{ROLE}</text>
