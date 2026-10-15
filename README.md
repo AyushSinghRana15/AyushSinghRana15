@@ -16,30 +16,63 @@
 
 ## 🚀 About Me
 
+I'm an AI/ML developer focused on **harness engineering**: the context, memory, tools, orchestration and observability around an LLM that turn it into an agent you can trust in production.
+
+#### 💼 Currently at [CogKnowEdge Solutions](https://github.com/CogKnowEdge-Solutions)
+
 <table>
   <tr>
-    <td width="60">
-      <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f52d.png" width="50"/>
-    </td>
-    <td><b>Building practical AI systems</b><br/><sub>LLM apps, agent workflows, and ML projects that can leave the notebook.</sub></td>
+    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f9e0.png" width="40"/></td>
+    <td><a href="https://github.com/CogKnowEdge-Solutions/Context-Memory-Layer"><b>Context Memory Layer</b></a><br/><sub>Persistent context and memory for agents: short-term conversation, long-term knowledge, episodic and semantic recall. Includes hands-on labs on auditing agent runs, spans and tool calls, Postgres, MongoDB and RAG (including vectorless RAG).</sub></td>
   </tr>
   <tr>
-    <td>
-      <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f916.png" width="50"/>
-    </td>
-    <td><b>LLMs, AI agents, and real-world ML</b><br/><sub>Curious about systems that are useful, measurable, and easy to iterate.</sub></td>
+    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3ed.png" width="40"/></td>
+    <td><a href="https://github.com/CogKnowEdge-Solutions/Production-Layer"><b>Production Layer</b></a><br/><sub>Taking agentic apps from prototype to production. CareMatch checks clinical-trial eligibility with Claude and shows its reasoning every time: FastAPI, PostgreSQL, LangSmith tracing, Prometheus + Grafana, and a React dashboard.</sub></td>
   </tr>
   <tr>
-    <td>
-      <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4ca.png" width="50"/>
+    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4dc.png" width="40"/></td>
+    <td><a href="https://github.com/CogKnowEdge-Solutions/Comprehensive-Principle"><b>Comprehensive Principle</b></a><br/><sub>The constitution, <code>AGENTS.md</code> and guidelines every lab follows, written so both people and AI agents can build labs to the same standard.</sub></td>
+  </tr>
+</table>
+
+#### 🧪 Recent projects
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://github.com/AyushSinghRana15/NexApply"><b>NexApply</b></a><br/>
+      <sub>Real-time job application agent: spots new postings within 30 seconds, tailors a resume with Groq/LLaMA, and applies in parallel with Playwright workers.</sub><br/>
+      <sub><code>Python</code> <code>Groq</code> <code>Playwright</code></sub>
     </td>
-    <td><b>Production-minded experiments</b><br/><sub>Training, evaluating, and shipping with fewer mystery failures.</sub></td>
+    <td width="50%" valign="top">
+      <a href="https://github.com/AyushSinghRana15/RepoSplit-RAG-Question-Answering-system-for-Github-Repositories-"><b>RepoSplit</b></a><br/>
+      <sub>RAG assistant that turns large codebases into a queryable knowledge system you can ask questions in plain English.</sub><br/>
+      <sub><code>TypeScript</code> <code>RAG</code></sub>
+    </td>
   </tr>
   <tr>
-    <td>
-      <img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f331.png" width="50"/>
+    <td width="50%" valign="top">
+      <a href="https://github.com/AyushSinghRana15/Forensic-Lens"><b>Forensic Lens</b></a><br/>
+      <sub>Fraud detection that combines ML predictions, graph intelligence and LLM-powered investigation in a 3D forensic-lab UI.</sub><br/>
+      <sub><code>TypeScript</code> <code>ML</code> <code>LLMs</code></sub>
     </td>
-    <td><b>Always learning in public</b><br/><sub>Trying to turn ideas into small, working things before they get too precious.</sub></td>
+    <td width="50%" valign="top">
+      <a href="https://github.com/AyushSinghRana15/Context-Optimisation"><b>Context Optimisation</b></a><br/>
+      <sub>Benchmarks three prompt-compression strategies for LLM context windows: regex pruning, TF-IDF chunk ranking and LLMLingua-2.</sub><br/>
+      <sub><code>Python</code> <code>LLMLingua-2</code></sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://github.com/AyushSinghRana15/AIFLOW"><b>AIFLOW</b></a><br/>
+      <sub>A universal <code>.aiflow</code> format that turns AI workflows into machine-readable graphs, with LangGraph, CrewAI, LlamaIndex and OpenAI Agents examples.</sub><br/>
+      <sub><code>Python</code> <code>JSON Schema</code></sub>
+    </td>
+    <td width="50%" valign="top">
+      <a href="https://github.com/AyushSinghRana15/Financial-Risk-Management-System"><b>Financial Risk Management</b></a><br/>
+      <sub>Machine-learning credit risk model that predicts the risk level of individual credit applications.</sub><br/>
+      <sub><code>Python</code> <code>scikit-learn</code></sub>
+    </td>
   </tr>
 </table>
 
@@ -48,10 +81,20 @@
 ## 🛠️ Tech Arsenal
 
 <div align="center">
-  <img src="https://skillicons.dev/icons?i=python,tensorflow,sklearn,flask,fastapi,git,cpp,java,docker" />
+  <img src="https://skillicons.dev/icons?i=python,ts,fastapi,react,docker,postgres,mongodb,redis,prometheus,grafana,githubactions,pytorch,tensorflow,sklearn" />
 </div>
 
+<br/>
 
+| Harness layer | What I use |
+| --- | --- |
+| 🧩 **Orchestration** | LangGraph · LangChain |
+| 🤖 **Models** | Anthropic Claude · OpenAI · Groq (LLaMA) |
+| 🧠 **Context & memory** | FAISS · BM25 · sentence-transformers · PageIndex (vectorless RAG) · Redis · PostgreSQL · MongoDB |
+| 🛠️ **Tools & automation** | Playwright · httpx · APScheduler |
+| 🚀 **Serving** | FastAPI · Pydantic · Docker Compose |
+| 📈 **Observability & evals** | LangSmith · Prometheus · Grafana · pytest |
+| 📊 **Classic ML** | PyTorch · TensorFlow · scikit-learn · XGBoost |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/output/github-contribution-grid-snake-dark.svg" />
