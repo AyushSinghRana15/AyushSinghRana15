@@ -41,32 +41,32 @@ def graphql(query):
         },
     )
     with urllib.request.urlopen(req) as resp:
-        return json.loads(resp.read())
+        body = json.loads(resp.read())
+    if body.get("errors"):
+        raise RuntimeError(f"GraphQL error: {body['errors']}")
+    return body
 
 
 # ── Streak helpers ───────────────────────────────────────
 
-def compute_streaks(weeks):
-    days = []
-    for w in weeks:
-        for d in w["contributionDays"]:
-            days.append((d["date"], d["contributionCount"]))
-    days.sort(key=lambda x: x[0])
-
+def compute_streaks(days, today):
+    """days: {date: count} for the whole history. Returns (current, longest)."""
     if not days:
         return 0, 0
 
+    # Current streak: walk back from today. A zero today doesn't break the
+    # streak since the day isn't over yet; any other zero does.
     current = 0
-    for _, c in reversed(days):
-        if c > 0:
-            current += 1
-        else:
-            if current > 0:
-                break
+    d = today
+    if days.get(d, 0) == 0:
+        d -= timedelta(days=1)
+    while days.get(d, 0) > 0:
+        current += 1
+        d -= timedelta(days=1)
 
     longest = 0
     run = 0
-    for _, c in days:
+    for _, c in sorted(days.items()):
         if c > 0:
             run += 1
             longest = max(longest, run)
@@ -76,14 +76,13 @@ def compute_streaks(weeks):
     return current, longest
 
 
-def contributions_for_range(from_dt, to_excl):
-    """Query total contributions + calendar weeks for [from_dt, to_excl)."""
+def contributions_for_range(from_dt, to_dt):
+    """Query calendar weeks for [from_dt, to_dt]."""
     gql = graphql("""
     {
       user(login: "%s") {
         contributionsCollection(from: "%s", to: "%s") {
           contributionCalendar {
-            totalContributions
             weeks {
               contributionDays {
                 contributionCount
@@ -94,11 +93,8 @@ def contributions_for_range(from_dt, to_excl):
         }
       }
     }
-    """ % (USERNAME, from_dt, to_excl))
-    if gql and gql.get("data"):
-        cal = gql["data"]["user"]["contributionsCollection"]["contributionCalendar"]
-        return cal["totalContributions"], cal["weeks"]
-    return None, None
+    """ % (USERNAME, from_dt, to_dt))
+    return gql["data"]["user"]["contributionsCollection"]["contributionCalendar"]["weeks"]
 
 
 # ── SVG templates ────────────────────────────────────────
@@ -240,10 +236,16 @@ def main():
 
     # Basic user info
     user = rest(f"https://api.github.com/users/{USERNAME}")
-    repos_data = rest(
-        f"https://api.github.com/users/{USERNAME}/repos?per_page=100&sort=updated"
-    )
-    total_stars = sum(r.get("stargazers_count", 0) for r in repos_data)
+    total_stars = 0
+    page = 1
+    while True:
+        repos_data = rest(
+            f"https://api.github.com/users/{USERNAME}/repos?per_page=100&page={page}"
+        )
+        total_stars += sum(r.get("stargazers_count", 0) for r in repos_data)
+        if len(repos_data) < 100:
+            break
+        page += 1
 
     stats = stats_svg(total_stars, user["public_repos"], user["followers"])
 
@@ -266,27 +268,26 @@ def main():
         ).astimezone(timezone.utc).date()
         today = datetime.now(timezone.utc).date()
 
+        # The API caps each query at one year and pads the calendar to whole
+        # weeks (including future days), so query non-overlapping chunks and
+        # keep only the days each chunk actually covers.
+        days = {}
         cursor = join_date
-        recent_weeks = None
-        while cursor < today:
-            to_excl = min(
-                cursor + timedelta(days=335),
-                today + timedelta(days=2),
-            )
-            contrib, weeks = contributions_for_range(
+        while cursor <= today:
+            chunk_end = min(cursor + timedelta(days=364), today)
+            weeks = contributions_for_range(
                 f"{cursor}T00:00:00Z",
-                f"{to_excl}T00:00:00Z",
+                f"{chunk_end}T23:59:59Z",
             )
-            if contrib is None:
-                break
-            total_contrib += contrib
-            recent_weeks = weeks
-            cursor = to_excl
+            for w in weeks:
+                for d in w["contributionDays"]:
+                    day = date.fromisoformat(d["date"])
+                    if cursor <= day <= chunk_end:
+                        days[day] = d["contributionCount"]
+            cursor = chunk_end + timedelta(days=1)
 
-        if recent_weeks:
-            current_streak, longest_streak = compute_streaks(recent_weeks)
-        else:
-            current_streak, longest_streak = 0, 0
+        total_contrib = sum(days.values())
+        current_streak, longest_streak = compute_streaks(days, today)
 
     streak = streak_svg(
         fmt(total_contrib),
