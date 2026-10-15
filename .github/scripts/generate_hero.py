@@ -16,7 +16,7 @@ from html import escape
 ASSETS = os.path.join(os.path.dirname(__file__), "..", "..", "assets")
 
 NAME = "Ayush Singh"
-ROLE = "AI/ML Developer"
+ROLE = "AI Engineer"
 PHRASES = [
     "engineering agent harnesses",
     "building memory layers for agents",

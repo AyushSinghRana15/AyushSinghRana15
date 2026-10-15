@@ -1,7 +1,7 @@
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/hero-dark.svg" />
-    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/hero-light.svg" width="100%" alt="Ayush Singh, AI/ML Developer: building LLM systems and AI agents, shipping applied ML to production, exploring agent workflows" />
+    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/hero-light.svg" width="100%" alt="Ayush Singh, AI Engineer: engineering agent harnesses, building memory layers for agents, shipping LLM systems to production" />
   </picture>
 
   <p>
@@ -16,9 +16,9 @@
 
 ## 🚀 About Me
 
-I'm an AI/ML developer focused on **harness engineering**: the context, memory, tools, orchestration and observability around an LLM that turn it into an agent you can trust in production.
+I'm an AI Engineer focused on **harness engineering**: the context, memory, tools, orchestration and observability around an LLM that turn it into an agent you can trust in production.
 
-#### 💼 Currently at [CogKnowEdge Solutions](https://github.com/CogKnowEdge-Solutions)
+#### 💼 AI Engineer at [CogKnowEdge Solutions](https://github.com/CogKnowEdge-Solutions)
 
 <table>
   <tr>
@@ -81,7 +81,7 @@ I'm an AI/ML developer focused on **harness engineering**: the context, memory, 
 ## 🛠️ Tech Arsenal
 
 <div align="center">
-  <img src="https://skillicons.dev/icons?i=python,ts,fastapi,react,docker,postgres,mongodb,redis,prometheus,grafana,githubactions,pytorch,tensorflow,sklearn" />
+  <img src="https://skillicons.dev/icons?i=python,ts,fastapi,react,docker,postgres,mongodb,redis,prometheus,grafana,githubactions,tensorflow,sklearn" />
 </div>
 
 <br/>
@@ -94,7 +94,7 @@ I'm an AI/ML developer focused on **harness engineering**: the context, memory, 
 | 🛠️ **Tools & automation** | Playwright · httpx · APScheduler |
 | 🚀 **Serving** | FastAPI · Pydantic · Docker Compose |
 | 📈 **Observability & evals** | LangSmith · Prometheus · Grafana · pytest |
-| 📊 **Classic ML** | PyTorch · TensorFlow · scikit-learn · XGBoost |
+| 📊 **Classic ML** | TensorFlow · scikit-learn · XGBoost · pandas |
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/output/github-contribution-grid-snake-dark.svg" />
