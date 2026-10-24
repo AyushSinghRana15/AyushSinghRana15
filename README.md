@@ -20,20 +20,26 @@ I'm an AI Engineer at [CogKnowEdge Solutions](https://github.com/CogKnowEdge-Sol
 
 #### ⭐ Featured work
 
-<table>
-  <tr>
-    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6e0.png" width="40"/></td>
-    <td><a href="https://github.com/AyushSinghRana15/Code-Fixer"><b>Code Fixer</b></a><br/><sub>Autonomous agent that reproduces a reported bug in a sandbox, fixes it, reruns the tests until they pass and opens a pull request explaining the root cause. Built to run nearly free on free-tier LLM providers, with a live dashboard and an encrypted key vault.</sub></td>
-  </tr>
-  <tr>
-    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3d4.png" width="40"/></td>
-    <td><a href="https://github.com/AyushSinghRana15/Yatra-Setu"><b>YatraSetu</b></a><br/><sub>Safety assistant for Char Dham and Hemkund Sahib pilgrims in English and Hindi, by text or voice: RAG answers with sources through LangChain and OpenRouter, crowd forecasts, route-risk maps, SOS, and a dashboard for district officials.</sub></td>
-  </tr>
-  <tr>
-    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4bc.png" width="40"/></td>
-    <td><a href="https://github.com/AyushSinghRana15/NexApply"><b>NexApply</b></a><br/><sub>Real-time job application agent: spots new postings within 30 seconds, tailors a resume with Groq/LLaMA and applies in parallel with Playwright workers across LinkedIn, Indeed, Naukri and Internshala.</sub></td>
-  </tr>
-</table>
+<a href="https://github.com/AyushSinghRana15/Code-Fixer">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/project-code-fixer-dark.svg" />
+    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/project-code-fixer-light.svg" width="100%" alt="Code Fixer: autonomous agent that reproduces a bug in a sandbox, fixes it, reruns the tests and opens a pull request" />
+  </picture>
+</a>
+
+<a href="https://github.com/AyushSinghRana15/Yatra-Setu">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/project-yatra-setu-dark.svg" />
+    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/project-yatra-setu-light.svg" width="100%" alt="YatraSetu: bilingual safety assistant for Char Dham and Hemkund Sahib pilgrims, by text or voice" />
+  </picture>
+</a>
+
+<a href="https://github.com/AyushSinghRana15/NexApply">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/project-nexapply-dark.svg" />
+    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/project-nexapply-light.svg" width="100%" alt="NexApply: real-time job application agent that tailors resumes and applies with Playwright workers" />
+  </picture>
+</a>
 
 
 ---
@@ -46,15 +52,12 @@ I'm an AI Engineer at [CogKnowEdge Solutions](https://github.com/CogKnowEdge-Sol
 
 <br/>
 
-| Harness layer | What I use |
-| --- | --- |
-| 🧩 **Orchestration** | LangGraph · LangChain |
-| 🤖 **Models** | Anthropic Claude · OpenAI · Groq (LLaMA) |
-| 🧠 **Context & memory** | FAISS · BM25 · sentence-transformers · PageIndex (vectorless RAG) · Redis · PostgreSQL · MongoDB |
-| 🛠️ **Tools & automation** | Playwright · httpx · APScheduler |
-| 🚀 **Serving** | FastAPI · Pydantic · Docker Compose |
-| 📈 **Observability & evals** | LangSmith · Prometheus · Grafana · pytest |
-| 📊 **Classic ML** | TensorFlow · scikit-learn · XGBoost · pandas |
+<a href="https://github.com/AyushSinghRana15?tab=repositories">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/arsenal-dark.svg" />
+    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/arsenal-light.svg" width="100%" alt="Tech Arsenal by harness layer: orchestration, models, context and memory, tools and automation, serving, observability and evals, classic ML" />
+  </picture>
+</a>
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/output/github-contribution-grid-snake-dark.svg" />
