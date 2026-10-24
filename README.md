@@ -1,7 +1,7 @@
 <div align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/hero-dark.svg" />
-    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/hero-light.svg" width="100%" alt="Ayush Singh, AI Engineer: engineering agent harnesses, building memory layers for agents, shipping LLM systems to production" />
+    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/hero-light.svg" width="100%" alt="Ayush Singh, AI Engineer: fixing bugs with autonomous agents, building bilingual RAG assistants, automating job hunts with LLM agents" />
   </picture>
 
   <p>
