@@ -201,12 +201,7 @@ def _svg(w, h, title, t, body, extra_style=""):
   .num {{ font-size: 26px; font-weight: 700; fill: {t["fg"]}; }}
   .label {{ font-size: 12px; fill: {t["muted"]}; }}
   .sub {{ font-size: 10.5px; fill: {t["muted"]}; }}
-  /* Final state is the default; animations only play *from* hidden, so
-     renderers without animation support still show every value. */
-  .fade {{ animation: fade .6s ease-out both; }}
-  @keyframes fade {{ from {{ opacity: 0; transform: translateY(4px); }} }}
   {extra_style}
-  @media (prefers-reduced-motion: reduce) {{ * {{ animation: none !important; }} }}
 </style>
 <defs>
   <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
@@ -226,12 +221,58 @@ def _header(title, meta, w):
     )
 
 
-def _icon(path, cx, cy, color, delay):
-    # Icons are drawn on a 16x16 grid.
+def _appear(delay, dur=.6):
+    """SMIL fade-in after `delay` seconds. The element's own opacity is the
+    final state, so renderers without SMIL simply show it."""
+    total = delay + dur
+    if delay <= 0:
+        return f'<animate attributeName="opacity" values="0;1" dur="{dur}s" fill="freeze"/>'
     return (
-        f'<g class="fade" style="animation-delay:{delay}s">'
-        f'<path d="{path}" fill="{color}" transform="translate({cx - 8},{cy - 8})"/></g>'
+        f'<animate attributeName="opacity" values="0;0;1" keyTimes="0;{delay / total:.3f};1" '
+        f'dur="{total:.2f}s" fill="freeze"/>'
     )
+
+
+def _icon(path, cx, cy, color, delay, bob=0.0):
+    """16x16 icon that fades in, then (optionally) floats gently."""
+    float_ = ""
+    if bob:
+        float_ = (
+            f'<animateTransform attributeName="transform" type="translate" values="0 0;0 -2.5;0 0" '
+            f'dur="3s" begin="{bob}s" repeatCount="indefinite"/>'
+        )
+    return (
+        f'<g>{_appear(delay)}<g>{float_}'
+        f'<path d="{path}" fill="{color}" transform="translate({cx - 8},{cy - 8})"/></g></g>'
+    )
+
+
+def _count_up(final, fmt, x, y, cls, delay, dur=1.2, style="", steps=14):
+    """A number that counts up to `final`, using stacked frames shown one at a
+    time. Without SMIL only the final frame (the default) is visible."""
+    total = delay + dur
+    frames = []
+    for k in range(steps + 1):
+        e = 1 - (1 - k / steps) ** 3          # ease-out
+        v = round(final * e)
+        if not frames or v != frames[-1][1]:
+            frames.append((delay + dur * k / steps, v))
+    out = ""
+    for i, (tm, v) in enumerate(frames):
+        a = max(tm / total, .001) if i else .001
+        common = f'x="{x}" y="{y}" class="{cls}" text-anchor="middle" style="{style}"'
+        if i == len(frames) - 1:
+            out += (
+                f'<text {common}>{fmt(v)}<animate attributeName="opacity" values="0;1" keyTimes="0;{min(a, .999):.3f}" '
+                f'calcMode="discrete" dur="{total:.2f}s" fill="freeze"/></text>'
+            )
+        else:
+            b = frames[i + 1][0] / total
+            out += (
+                f'<text {common} opacity="0">{fmt(v)}<animate attributeName="opacity" values="0;1;0" '
+                f'keyTimes="0;{a:.3f};{b:.3f}" calcMode="discrete" dur="{total:.2f}s" fill="freeze"/></text>'
+            )
+    return out
 
 
 def _fmt_date(d, year=False):
@@ -306,37 +347,48 @@ CALENDAR = (
 W, H = 420, 200
 
 
-def _metric(cx, icon, color, value, label, delay):
+def _metric(cx, icon, color, value, label, delay, bob):
     return (
-        _icon(icon, cx, 62, color, delay)
-        + f'<text x="{cx}" y="101" class="num fade" text-anchor="middle" '
-          f'style="animation-delay:{delay + .1}s">{escape(str(value))}</text>'
-        + f'<text x="{cx}" y="120" class="label fade" text-anchor="middle" '
-          f'style="animation-delay:{delay + .2}s">{escape(label)}</text>'
+        _icon(icon, cx, 62, color, delay, bob)
+        + _count_up(value, str, cx, 101, "num", delay + .1)
+        + f'<text x="{cx}" y="120" class="label" text-anchor="middle">{escape(label)}{_appear(delay + .2)}</text>'
     )
 
 
 def stats_svg(t, stars, repos, followers, langs, updated):
     cols = [W // 6, W // 2, 5 * W // 6]
     body = _header("GitHub Overview", f"Updated {_fmt_date(updated)}", W)
-    body += _metric(cols[0], STAR, "#e3b341", stars, "Stars earned", .1)
-    body += _metric(cols[1], REPO, t["grad"][0], repos, "Public repos", .25)
-    body += _metric(cols[2], PEOPLE, t["grad"][2], followers, "Followers", .4)
+    body += _metric(cols[0], STAR, "#e3b341", stars, "Stars earned", .1, 1.0)
+    body += _metric(cols[1], REPO, t["grad"][0], repos, "Public repos", .25, 2.0)
+    body += _metric(cols[2], PEOPLE, t["grad"][2], followers, "Followers", .4, 3.0)
 
-    # Language bar: segments grow in from the left one after another.
+    # Language bar: segments grow in one after another, then a shine sweeps
+    # across it every few seconds.
     bar_x, bar_w, bar_y = 20, W - 40, 150
-    body += f'<text x="20" y="{bar_y - 8}" class="sub fade" style="animation-delay:.5s">Most used languages</text>'
-    body += f'<clipPath id="bar"><rect x="{bar_x}" y="{bar_y}" width="{bar_w}" height="8" rx="4"/></clipPath>'
+    body += f'<text x="20" y="{bar_y - 8}" class="sub">Most used languages{_appear(.5)}</text>'
+    body += (
+        f'<defs><clipPath id="bar"><rect x="{bar_x}" y="{bar_y}" width="{bar_w}" height="8" rx="4"/></clipPath>'
+        f'<linearGradient id="shine" x1="0" y1="0" x2="1" y2="0">'
+        f'<stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/>'
+        f'<stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>'
+    )
     body += f'<rect x="{bar_x}" y="{bar_y}" width="{bar_w}" height="8" rx="4" fill="{t["subtle"]}"/>'
     body += '<g clip-path="url(#bar)">'
     x = bar_x
     for i, (_, share, color) in enumerate(langs):
-        w = share * bar_w
+        w = share * bar_w + .5
+        d = .6 + i * .15
         body += (
-            f'<rect class="seg" x="{x:.1f}" y="{bar_y}" width="{w + .5:.1f}" height="8" '
-            f'fill="{color}" style="animation-delay:{.6 + i * .12:.2f}s"/>'
+            f'<rect x="{x:.1f}" y="{bar_y}" width="{w:.1f}" height="8" fill="{color}">'
+            f'<animate attributeName="width" values="0;0;{w:.1f}" keyTimes="0;{d / (d + .5):.3f};1" '
+            f'dur="{d + .5:.2f}s" fill="freeze"/></rect>'
         )
-        x += w
+        x += w - .5
+    body += (
+        f'<rect x="{bar_x - 70}" y="{bar_y}" width="60" height="8" fill="url(#shine)">'
+        f'<animate attributeName="x" values="{bar_x - 70};{bar_x - 70};{bar_x + bar_w + 10}" keyTimes="0;.55;1" '
+        f'dur="4s" begin="1.5s" repeatCount="indefinite"/></rect>'
+    )
     body += "</g>"
 
     # Legend: one row, evenly spaced.
@@ -344,17 +396,13 @@ def stats_svg(t, stars, repos, followers, langs, updated):
     for i, (name, share, color) in enumerate(langs):
         lx = bar_x + i * slot
         body += (
-            f'<g class="fade" style="animation-delay:{.7 + i * .1:.2f}s">'
+            f'<g>{_appear(.8 + i * .1)}'
             f'<circle cx="{lx + 4:.1f}" cy="{bar_y + 26}" r="4" fill="{color}"/>'
             f'<text x="{lx + 12:.1f}" y="{bar_y + 30}" class="sub">'
             f'<tspan fill="{t["fg"]}">{escape(name)}</tspan> {share:.0%}</text></g>'
         )
 
-    style = (
-        ".seg { transform-box: fill-box; transform-origin: left; animation: grow-x .5s ease-out both; }"
-        " @keyframes grow-x { from { transform: scaleX(0); } }"
-    )
-    return _svg(W, H, f"{USERNAME}'s GitHub stats", t, body, style)
+    return _svg(W, H, f"{USERNAME}'s GitHub stats", t, body)
 
 
 def streak_svg(t, total, current, longest, join_date, today):
@@ -363,39 +411,56 @@ def streak_svg(t, total, current, longest, join_date, today):
     for x in (W // 3, 2 * W // 3):
         body += f'<line x1="{x}" y1="62" x2="{x}" y2="168" stroke="{t["border"]}"/>'
 
-    def side(cx, icon, color, value, label, sub, delay):
+    def side(cx, icon, color, value, fmt, label, sub, delay, bob):
         return (
-            _icon(icon, cx, 70, color, delay)
-            + f'<text x="{cx}" y="112" class="num fade" text-anchor="middle" style="animation-delay:{delay + .1}s">{value}</text>'
-            + f'<text x="{cx}" y="134" class="label fade" text-anchor="middle" style="animation-delay:{delay + .2}s">{escape(label)}</text>'
-            + f'<text x="{cx}" y="152" class="sub fade" text-anchor="middle" style="animation-delay:{delay + .3}s">{escape(sub)}</text>'
+            _icon(icon, cx, 70, color, delay, bob)
+            + _count_up(value, fmt, cx, 112, "num", delay + .1)
+            + f'<text x="{cx}" y="134" class="label" text-anchor="middle">{escape(label)}{_appear(delay + .2)}</text>'
+            + f'<text x="{cx}" y="152" class="sub" text-anchor="middle">{escape(sub)}{_appear(delay + .3)}</text>'
         )
 
-    body += side(cols[0], CALENDAR, t["grad"][0], f"{total:,}", "Total contributions",
-                 f"{_fmt_date(join_date, True)} – Present", .1)
-    body += side(cols[2], TROPHY, "#e3b341", f"{longest[0]}d", "Longest streak",
-                 _fmt_range(longest[1], longest[2], today), .3)
+    body += side(cols[0], CALENDAR, t["grad"][0], total, lambda v: f"{v:,}", "Total contributions",
+                 f"{_fmt_date(join_date, True)} – Present", .1, 1.5)
+    body += side(cols[2], TROPHY, "#e3b341", longest[0], lambda v: f"{v}d", "Longest streak",
+                 _fmt_range(longest[1], longest[2], today), .3, 2.5)
 
-    # Current streak: a gradient ring that draws itself, with the flame on top.
+    # Current streak: a gradient ring that draws itself, a spark circling it,
+    # and a flickering flame shedding embers.
     cx, cy, r = cols[1], 102, 36
     circ = 2 * 3.14159 * r
+    g1 = t["grad"][1]
     body += f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{t["subtle"]}" stroke-width="5"/>'
     body += (
-        f'<circle class="ring" cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="url(#grad)" '
-        f'stroke-width="5" stroke-linecap="round" stroke-dasharray="{circ:.1f}" '
-        f'transform="rotate(-90 {cx} {cy})"/>'
+        f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="url(#grad)" stroke-width="5" '
+        f'stroke-linecap="round" stroke-dasharray="{circ:.1f}" transform="rotate(-90 {cx} {cy})">'
+        f'<animate attributeName="stroke-dashoffset" values="{circ:.1f};{circ:.1f};0" keyTimes="0;.15;1" '
+        f'dur="1.4s" fill="freeze"/></circle>'
+    )
+    body += (
+        f'<circle r="3" fill="{g1}"><animate attributeName="opacity" values="0;0;1" keyTimes="0;.99;1" dur="1.4s" fill="freeze"/>'
+        f'<animateMotion dur="5s" begin="1.4s" repeatCount="indefinite" '
+        f'path="M{cx},{cy - r} a{r},{r} 0 1,1 0,{2 * r} a{r},{r} 0 1,1 0,{-2 * r}"/></circle>'
     )
     body += f'<circle cx="{cx}" cy="{cy - r}" r="11" fill="{t["bg"]}"/>'
-    body += _icon(FLAME, cx, cy - r, t["flame"], .5)
-    body += f'<text x="{cx}" y="{cy + 9}" class="num fade" text-anchor="middle" style="animation-delay:.6s">{current[0]}d</text>'
-    body += f'<text x="{cx}" y="160" class="label fade" text-anchor="middle" style="animation-delay:.7s;fill:{t["flame"]};font-weight:600">Current streak</text>'
-    body += f'<text x="{cx}" y="177" class="sub fade" text-anchor="middle" style="animation-delay:.8s">{escape(_fmt_range(current[1], current[2], today))}</text>'
-
-    style = (
-        f".ring {{ animation: draw 1.2s .2s ease-out both; }}"
-        f" @keyframes draw {{ from {{ stroke-dashoffset: {circ:.1f}; }} }}"
+    for k in range(3):
+        body += (
+            f'<circle cx="{cx + (k - 1) * 3}" cy="{cy - r - 6}" r="1.6" fill="{t["flame"]}" opacity="0">'
+            f'<animate attributeName="cy" values="{cy - r - 6};{cy - r - 24}" dur="1.8s" begin="{.6 + k * .6:.1f}s" repeatCount="indefinite"/>'
+            f'<animate attributeName="opacity" values="0;.9;0" dur="1.8s" begin="{.6 + k * .6:.1f}s" repeatCount="indefinite"/></circle>'
+        )
+    body += (
+        f'<g>{_appear(.5)}<g transform="translate({cx},{cy - r + 6})">'
+        f'<g><animateTransform attributeName="transform" type="scale" values="1 1;1.08 1.14;.96 1.04;1.04 1.1;1 1" '
+        f'dur="1.4s" repeatCount="indefinite"/>'
+        f'<path d="{FLAME}" fill="{t["flame"]}" transform="translate(-8,-14)"/></g></g></g>'
     )
-    return _svg(W, H, f"{USERNAME}'s contribution streak", t, body, style)
+    body += _count_up(current[0], lambda v: f"{v}d", cx, cy + 9, "num", .6, dur=.8)
+    body += (
+        f'<text x="{cx}" y="160" class="label" text-anchor="middle" style="fill:{t["flame"]};font-weight:600">'
+        f'Current streak{_appear(.7)}</text>'
+        f'<text x="{cx}" y="177" class="sub" text-anchor="middle">{escape(_fmt_range(current[1], current[2], today))}{_appear(.8)}</text>'
+    )
+    return _svg(W, H, f"{USERNAME}'s contribution streak", t, body)
 
 
 def activity_svg(t, days, today, n=30):
@@ -411,6 +476,15 @@ def activity_svg(t, days, today, n=30):
     left, right, base, max_h = 24, AW - 24, 146, 82
     slot = (right - left) / n
     bw = slot * .62
+
+    # A soft scan band sweeps across the chart.
+    body += (
+        f'<defs><linearGradient id="scan" x1="0" y1="0" x2="1" y2="0">'
+        f'<stop offset="0" stop-color="{t["fg"]}" stop-opacity="0"/><stop offset=".5" stop-color="{t["fg"]}" stop-opacity=".07"/>'
+        f'<stop offset="1" stop-color="{t["fg"]}" stop-opacity="0"/></linearGradient></defs>'
+        f'<rect x="{left - 80}" y="{base - max_h - 14}" width="80" height="{max_h + 14}" fill="url(#scan)">'
+        f'<animate attributeName="x" values="{left - 80};{right}" dur="5s" begin="1.5s" repeatCount="indefinite"/></rect>'
+    )
     for i, (d, c) in enumerate(zip(series, counts)):
         x = left + i * slot + (slot - bw) / 2
         if c:
@@ -421,14 +495,25 @@ def activity_svg(t, days, today, n=30):
             fill = "url(#grad)" if d == today else t["levels"][level]
         else:
             h, fill = 3, t["subtle"]
-        body += (
-            f'<rect class="bar" x="{x:.1f}" y="{base - h:.1f}" width="{bw:.1f}" height="{h:.1f}" '
-            f'rx="3" fill="{fill}" style="animation-delay:{i * .025:.3f}s"/>'
+        delay = i * .03
+        tot = delay + .5
+        a = max(delay / tot, .001)
+        grow = (
+            f'<animate attributeName="height" values="0;0;{h:.1f}" keyTimes="0;{a:.3f};1" dur="{tot:.2f}s" fill="freeze"/>'
+            f'<animate attributeName="y" values="{base};{base};{base - h:.1f}" keyTimes="0;{a:.3f};1" dur="{tot:.2f}s" fill="freeze"/>'
         )
+        if d == today and c:
+            # Today pulses.
+            body += (
+                f'<rect x="{x - 3:.1f}" y="{base - h - 3:.1f}" width="{bw + 6:.1f}" height="{h + 3:.1f}" rx="5" '
+                f'fill="none" stroke="{t["grad"][1]}" stroke-width="1.5" opacity="0">'
+                f'<animate attributeName="opacity" values="0;.8;0" dur="2s" begin="1.5s" repeatCount="indefinite"/></rect>'
+            )
+        body += f'<rect x="{x:.1f}" y="{base - h:.1f}" width="{bw:.1f}" height="{h:.1f}" rx="3" fill="{fill}">{grow}</rect>'
         if c == peak and c:
             body += (
-                f'<text x="{x + bw / 2:.1f}" y="{base - h - 6:.1f}" class="sub fade" text-anchor="middle" '
-                f'style="animation-delay:{.8 + i * .025:.2f}s;fill:{t["fg"]};font-weight:600">{c}</text>'
+                f'<text x="{x + bw / 2:.1f}" y="{base - h - 6:.1f}" class="sub" text-anchor="middle" '
+                f'style="fill:{t["fg"]};font-weight:600">{c}{_appear(1.2)}</text>'
             )
 
     for i in (0, n // 2):
@@ -436,11 +521,7 @@ def activity_svg(t, days, today, n=30):
         body += f'<text x="{x:.1f}" y="166" class="sub" text-anchor="middle">{_fmt_date(series[i])}</text>'
     body += f'<text x="{left + (n - .5) * slot:.1f}" y="166" class="sub" text-anchor="middle" style="fill:{t["fg"]}">Today</text>'
 
-    style = (
-        ".bar { transform-box: fill-box; transform-origin: bottom; animation: grow-y .5s ease-out both; }"
-        " @keyframes grow-y { from { transform: scaleY(0); } }"
-    )
-    return _svg(AW, AH, f"{USERNAME}'s contributions over the last {n} days", t, body, style)
+    return _svg(AW, AH, f"{USERNAME}'s contributions over the last {n} days", t, body)
 
 
 # ── Main ─────────────────────────────────────────────────
