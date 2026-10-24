@@ -52,12 +52,13 @@ PROJECTS = [
         "tags": ["Python", "LangChain", "RAG", "Voice"],
     },
     {
-        "slug": "nexapply",
-        "title": "NexApply",
-        "kicker": "Real-time job application agent",
-        "body": "Spots new postings within 30 seconds, tailors a resume with Groq/LLaMA and applies "
-                "in parallel with Playwright workers across LinkedIn, Indeed, Naukri and Internshala.",
-        "tags": ["Python", "Groq", "Playwright"],
+        "slug": "finrisk",
+        "title": "FinRisk",
+        "kicker": "AI-powered financial risk management · finrisk.online",
+        "body": "Seven risk modules in one dashboard: XGBoost/CatBoost credit scoring, ML Value-at-Risk "
+                "on NIFTY 50, liquidity and fraud checks, live portfolio tracking via yfinance, and an "
+                "AI chatbot that answers questions about your portfolio.",
+        "tags": ["Python", "FastAPI", "XGBoost", "React"],
     },
 ]
 
@@ -230,7 +231,7 @@ def yatra_setu_anim(t, top, h):
     out += (
         f'<path d="{route}" fill="none" stroke="{g1}" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round">'
         f'<animate attributeName="stroke-dashoffset" values="0;-20" dur="1s" repeatCount="indefinite"/></path>'
-        f'<circle r="5" fill="{g0}" stroke="{t["bg"]}" stroke-width="2"><animateMotion dur="6s" repeatCount="indefinite" path="{route}"/></circle>'
+        f'<circle r="5" fill="{g0}" stroke="{t["bg"]}" stroke-width="2" opacity="0"><set attributeName="opacity" to="1"/><animateMotion dur="6s" repeatCount="indefinite" path="{route}"/></circle>'
         # Shrine marker at the end of the route, pinging.
         f'<circle cx="{AX + 196}" cy="{top + 46}" r="5" fill="none" stroke="{g2}" stroke-width="2">'
         f'<animate attributeName="r" values="5;14" dur="2s" repeatCount="indefinite"/>'
@@ -249,31 +250,53 @@ def yatra_setu_anim(t, top, h):
     return out
 
 
-def nexapply_anim(t, top, h):
-    """New postings arrive and get applied to, one after another."""
-    g0, g1, _ = t["grad"]
-    boards = ["LinkedIn", "Indeed", "Naukri"]
+def finrisk_anim(t, top, h):
+    """A portfolio line drawing itself, with a VaR readout and a credit-risk
+    tier that cycles low → medium → high."""
+    g0, g1, g2 = t["grad"]
     dur = 6
     out = _panel(t, top, h)
-    row_h = (h - 20) / len(boards)
-    for i, board in enumerate(boards):
-        y = top + 10 + i * row_h
-        cy = y + row_h / 2
-        start = .1 + i * .18
-        done = start + .3
-        bx, bw = AX + 84, 66
+    out += (
+        f'<text x="{AX + 14}" y="{top + 20}" class="tiny" style="fill:{t["fg"]}">Portfolio</text>'
+        f'<text x="{AX + AW - 14}" y="{top + 20}" class="tiny" text-anchor="end">VaR 95% · 2.4%</text>'
+    )
+    vals = [.55, .62, .5, .58, .7, .52, .44, .6, .68, .64, .8, .72, .86]
+    x0, x1, y0, y1 = AX + 14, AX + AW - 14, top + 30, top + 74
+    pts = [(x0 + i * (x1 - x0) / (len(vals) - 1), y1 - v * (y1 - y0)) for i, v in enumerate(vals)]
+    line = "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+    area = line + f" L{x1:.1f},{y1 + 4:.1f} L{x0:.1f},{y1 + 4:.1f} Z"
+    var_y = y1 - .47 * (y1 - y0)
+    out += (
+        f'<defs><linearGradient id="area" x1="0" y1="0" x2="0" y2="1">'
+        f'<stop offset="0" stop-color="{g1}" stop-opacity=".25"/><stop offset="1" stop-color="{g1}" stop-opacity="0"/></linearGradient></defs>'
+        f'<path d="{area}" fill="url(#area)"/>'
+        f'<line x1="{x0}" y1="{var_y:.1f}" x2="{x1}" y2="{var_y:.1f}" stroke="#f85149" stroke-width="1" stroke-dasharray="3 3" opacity=".7"/>'
+        f'<path d="{line}" fill="none" stroke="{g1}" stroke-width="2" stroke-linejoin="round" pathLength="100" stroke-dasharray="100 100">'
+        f'<animate attributeName="stroke-dashoffset" values="100;0;0;100" keyTimes="0;.45;.92;1" dur="{dur}s" repeatCount="indefinite"/></path>'
+        # Hidden unless SMIL runs; otherwise it would sit at the origin.
+        f'<circle r="4" fill="{g1}" stroke="{t["bg"]}" stroke-width="2" opacity="0"><set attributeName="opacity" to="1"/>'
+        f'<animateMotion dur="{dur}s" repeatCount="indefinite" keyPoints="0;1;1;0" keyTimes="0;.45;.92;1" calcMode="linear" path="{line}"/></circle>'
+    )
+    # Credit-risk tier: the highlight steps across Low / Medium / High.
+    tiers = [("Low", g1), ("Medium", "#d29922"), ("High", "#f85149")]
+    ty = top + h - 30
+    out += f'<text x="{AX + 14}" y="{ty + 13}" class="tiny">Credit risk</text>'
+    tx = AX + 86
+    for i, (name, color) in enumerate(tiers):
+        w = len(name) * 6 + 16
+        a, b = i / 3, (i + 1) / 3
+        on = f'values="0;1;0" keyTimes="0;{a:.3f};{b:.3f}"' if i else 'values="1;0" keyTimes="0;.333"'
         out += (
-            f'<text x="{AX + 16}" y="{cy + 3.5}" class="tiny" style="fill:{t["fg"]}">{board}</text>'
-            f'<rect x="{bx}" y="{cy - 3}" width="{bw}" height="6" rx="3" fill="{t["edge"]}"/>'
-            f'<rect x="{bx}" y="{cy - 3}" width="{bw}" height="6" rx="3" fill="{g0}">'
-            f'<animate attributeName="width" values="0;0;{bw};{bw};0" keyTimes="0;{start:.2f};{done:.2f};.95;1" dur="{dur}s" repeatCount="indefinite"/></rect>'
-            f'<text x="{AX + AW - 14}" y="{cy + 3.5}" class="tiny" text-anchor="end" style="fill:{g1}">✓ applied'
-            f'<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;{done:.2f};{done + .02:.2f};.95;1" dur="{dur}s" repeatCount="indefinite"/></text>'
+            f'<rect x="{tx}" y="{ty}" width="{w}" height="18" rx="9" fill="{t["bg"]}" stroke="{t["border"]}"/>'
+            f'<rect x="{tx}" y="{ty}" width="{w}" height="18" rx="9" fill="{color}" opacity="{0 if i else .25}" stroke="{color}">'
+            f'<animate attributeName="opacity" {on} calcMode="discrete" dur="{dur}s" repeatCount="indefinite"/></rect>'
+            f'<text x="{tx + w / 2}" y="{ty + 12.5}" class="tiny" text-anchor="middle" style="fill:{t["fg"]}">{name}</text>'
         )
+        tx += w + 6
     return out
 
 
-ANIMS = {"code-fixer": code_fixer_anim, "yatra-setu": yatra_setu_anim, "nexapply": nexapply_anim}
+ANIMS = {"code-fixer": code_fixer_anim, "yatra-setu": yatra_setu_anim, "finrisk": finrisk_anim}
 
 
 def project_svg(t, p):

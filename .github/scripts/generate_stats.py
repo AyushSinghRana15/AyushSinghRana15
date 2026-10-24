@@ -437,7 +437,7 @@ def streak_svg(t, total, current, longest, join_date, today):
         f'dur="1.4s" fill="freeze"/></circle>'
     )
     body += (
-        f'<circle r="3" fill="{g1}"><animate attributeName="opacity" values="0;0;1" keyTimes="0;.99;1" dur="1.4s" fill="freeze"/>'
+        f'<circle r="3" fill="{g1}" opacity="0"><animate attributeName="opacity" values="0;0;1" keyTimes="0;.99;1" dur="1.4s" fill="freeze"/>'
         f'<animateMotion dur="5s" begin="1.4s" repeatCount="indefinite" '
         f'path="M{cx},{cy - r} a{r},{r} 0 1,1 0,{2 * r} a{r},{r} 0 1,1 0,{-2 * r}"/></circle>'
     )

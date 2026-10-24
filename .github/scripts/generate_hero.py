@@ -156,7 +156,7 @@ def harness(t):
         # Orbit: dashed ring turning slowly, with a comet riding it.
         f'<circle cx="{CX}" cy="{CY}" r="{R}" fill="none" stroke="{t["edge"]}" stroke-width="1.5" stroke-dasharray="4 7">'
         f'<animateTransform attributeName="transform" type="rotate" from="0 {CX} {CY}" to="360 {CX} {CY}" dur="40s" repeatCount="indefinite"/></circle>'
-        f'<circle r="3.5" fill="{g1}"><animateMotion dur="9s" repeatCount="indefinite" '
+        f'<circle r="3.5" fill="{g1}" opacity="0"><set attributeName="opacity" to="1"/><animateMotion dur="9s" repeatCount="indefinite" '
         f'path="M{CX},{CY - R} a{R},{R} 0 1,1 0,{2 * R} a{R},{R} 0 1,1 0,{-2 * R}"/></circle>'
     )
 
