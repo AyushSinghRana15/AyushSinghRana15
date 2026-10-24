@@ -35,46 +35,6 @@ I'm an AI Engineer at [CogKnowEdge Solutions](https://github.com/CogKnowEdge-Sol
   </tr>
 </table>
 
-#### 🧪 Recent projects
-
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/AyushSinghRana15/RestorAI"><b>RestorAI</b></a><br/>
-      <sub>Restores damaged, faded, scratched and low-resolution photos with deep learning while preserving facial identity.</sub><br/>
-      <sub><code>Python</code> <code>Computer vision</code></sub>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/AyushSinghRana15/RepoSplit-RAG-Question-Answering-system-for-Github-Repositories-"><b>RepoSplit</b></a><br/>
-      <sub>RAG assistant that turns large codebases into a queryable knowledge system you can ask questions in plain English.</sub><br/>
-      <sub><code>TypeScript</code> <code>RAG</code></sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/AyushSinghRana15/Forensic-Lens"><b>Forensic Lens</b></a><br/>
-      <sub>Fraud detection that combines ML predictions, graph intelligence and LLM-powered investigation in a 3D forensic-lab UI.</sub><br/>
-      <sub><code>TypeScript</code> <code>ML</code> <code>LLMs</code></sub>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/AyushSinghRana15/Context-Optimisation"><b>Context Optimisation</b></a><br/>
-      <sub>Benchmarks three prompt-compression strategies for LLM context windows: regex pruning, TF-IDF chunk ranking and LLMLingua-2.</sub><br/>
-      <sub><code>Python</code> <code>LLMLingua-2</code></sub>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <a href="https://github.com/AyushSinghRana15/AIFLOW"><b>AIFLOW</b></a><br/>
-      <sub>A universal <code>.aiflow</code> format that turns AI workflows into machine-readable graphs, with LangGraph, CrewAI, LlamaIndex and OpenAI Agents examples.</sub><br/>
-      <sub><code>Python</code> <code>JSON Schema</code></sub>
-    </td>
-    <td width="50%" valign="top">
-      <a href="https://github.com/AyushSinghRana15/Financial-Risk-Management-System"><b>Financial Risk Management</b></a><br/>
-      <sub>Machine-learning credit risk model that predicts the risk level of individual credit applications.</sub><br/>
-      <sub><code>Python</code> <code>scikit-learn</code></sub>
-    </td>
-  </tr>
-</table>
 
 ---
 
