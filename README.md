@@ -16,22 +16,22 @@
 
 ## 🚀 About Me
 
-I'm an AI Engineer focused on **harness engineering**: the context, memory, tools, orchestration and observability around an LLM that turn it into an agent you can trust in production.
+I'm an AI Engineer at [CogKnowEdge Solutions](https://github.com/CogKnowEdge-Solutions), focused on **harness engineering**: the context, memory, tools, orchestration and observability around an LLM that turn it into an agent you can trust in production.
 
-#### 💼 AI Engineer at [CogKnowEdge Solutions](https://github.com/CogKnowEdge-Solutions)
+#### ⭐ Featured work
 
 <table>
   <tr>
-    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f9e0.png" width="40"/></td>
-    <td><a href="https://github.com/CogKnowEdge-Solutions/Context-Memory-Layer"><b>Context Memory Layer</b></a><br/><sub>Persistent context and memory for agents: short-term conversation, long-term knowledge, episodic and semantic recall. Includes hands-on labs on auditing agent runs, spans and tool calls, Postgres, MongoDB and RAG (including vectorless RAG).</sub></td>
+    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f6e0.png" width="40"/></td>
+    <td><a href="https://github.com/AyushSinghRana15/Code-Fixer"><b>Code Fixer</b></a><br/><sub>Autonomous agent that reproduces a reported bug in a sandbox, fixes it, reruns the tests until they pass and opens a pull request explaining the root cause. Built to run nearly free on free-tier LLM providers, with a live dashboard and an encrypted key vault.</sub></td>
   </tr>
   <tr>
-    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3ed.png" width="40"/></td>
-    <td><a href="https://github.com/CogKnowEdge-Solutions/Production-Layer"><b>Production Layer</b></a><br/><sub>Taking agentic apps from prototype to production. CareMatch checks clinical-trial eligibility with Claude and shows its reasoning every time: FastAPI, PostgreSQL, LangSmith tracing, Prometheus + Grafana, and a React dashboard.</sub></td>
+    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f3d4.png" width="40"/></td>
+    <td><a href="https://github.com/AyushSinghRana15/Yatra-Setu"><b>YatraSetu</b></a><br/><sub>Safety assistant for Char Dham and Hemkund Sahib pilgrims in English and Hindi, by text or voice: RAG answers with sources through LangChain and OpenRouter, crowd forecasts, route-risk maps, SOS, and a dashboard for district officials.</sub></td>
   </tr>
   <tr>
-    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4dc.png" width="40"/></td>
-    <td><a href="https://github.com/CogKnowEdge-Solutions/Comprehensive-Principle"><b>Comprehensive Principle</b></a><br/><sub>The constitution, <code>AGENTS.md</code> and guidelines every lab follows, written so both people and AI agents can build labs to the same standard.</sub></td>
+    <td width="60" align="center"><img src="https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f4bc.png" width="40"/></td>
+    <td><a href="https://github.com/AyushSinghRana15/NexApply"><b>NexApply</b></a><br/><sub>Real-time job application agent: spots new postings within 30 seconds, tailors a resume with Groq/LLaMA and applies in parallel with Playwright workers across LinkedIn, Indeed, Naukri and Internshala.</sub></td>
   </tr>
 </table>
 
@@ -40,9 +40,9 @@ I'm an AI Engineer focused on **harness engineering**: the context, memory, tool
 <table>
   <tr>
     <td width="50%" valign="top">
-      <a href="https://github.com/AyushSinghRana15/NexApply"><b>NexApply</b></a><br/>
-      <sub>Real-time job application agent: spots new postings within 30 seconds, tailors a resume with Groq/LLaMA, and applies in parallel with Playwright workers.</sub><br/>
-      <sub><code>Python</code> <code>Groq</code> <code>Playwright</code></sub>
+      <a href="https://github.com/AyushSinghRana15/RestorAI"><b>RestorAI</b></a><br/>
+      <sub>Restores damaged, faded, scratched and low-resolution photos with deep learning while preserving facial identity.</sub><br/>
+      <sub><code>Python</code> <code>Computer vision</code></sub>
     </td>
     <td width="50%" valign="top">
       <a href="https://github.com/AyushSinghRana15/RepoSplit-RAG-Question-Answering-system-for-Github-Repositories-"><b>RepoSplit</b></a><br/>
