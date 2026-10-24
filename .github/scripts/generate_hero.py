@@ -6,11 +6,14 @@ content, so this runs by hand (not in CI) whenever the text below changes:
 
     python .github/scripts/generate_hero.py
 
-The profile photo is read from assets/profile.svg.
+Animations stick to what WebKit (Safari, GitHub Desktop) renders reliably:
+SMIL on plain attributes (opacity, x, width, stroke-dashoffset, r),
+animateTransform with an explicit centre, and animateMotion. No animated clip
+paths, and no CSS transforms on <text>.
 """
 
+import math
 import os
-import re
 from html import escape
 
 ASSETS = os.path.join(os.path.dirname(__file__), "..", "..", "assets")
@@ -18,63 +21,38 @@ ASSETS = os.path.join(os.path.dirname(__file__), "..", "..", "assets")
 NAME = "Ayush Singh"
 ROLE = "AI Engineer"
 PHRASES = [
-    "engineering agent harnesses",
-    "building memory layers for agents",
-    "shipping LLM systems to production",
+    "fixing bugs with autonomous agents",     # Code-Fixer
+    "building bilingual RAG assistants",      # Yatra-Setu
+    "automating job hunts with LLM agents",   # NexApply
 ]
 CHIPS = [
-    ("Currently", "Agent memory & production layers"),
-    ("Stack", "Python · LangGraph · FastAPI"),
+    ("Building", "Code Fixer: issue → tested fix → PR"),
+    ("Stack", "Python · FastAPI · Next.js"),
     ("Style", "Useful, clean, production-aware"),
 ]
+# Parts of the agent harness drawn around the model, clockwise from top-right.
+HARNESS = ["Tools", "Sandbox", "Evals", "Context"]
 
 THEMES = {
     "dark": {
         "bg": "#0d1117", "border": "#30363d", "fg": "#e6edf3",
-        "muted": "#8b949e", "chip": "#161b22", "edge": "#30363d",
+        "muted": "#8b949e", "chip": "#161b22", "edge": "#30363d", "dot": "#30363d",
         "grad": ["#2f81f7", "#3fb950", "#a371f7"],
     },
     "light": {
         "bg": "#ffffff", "border": "#d0d7de", "fg": "#1f2328",
-        "muted": "#656d76", "chip": "#f6f8fa", "edge": "#d0d7de",
+        "muted": "#656d76", "chip": "#f6f8fa", "edge": "#d0d7de", "dot": "#d0d7de",
         "grad": ["#0969da", "#1a7f37", "#8250df"],
     },
 }
+LIGHTS = ["#ff5f57", "#febc2e", "#28c840"]
 
 SANS = "-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif"
 MONO = "ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace"
 
-W, H = 860, 290
-HEX = "68 8, 124 38, 124 98, 68 128, 12 98, 12 38"
-
-
-def _photo():
-    with open(os.path.join(ASSETS, "profile.svg")) as f:
-        return re.search(r'href="(data:image/[^"]+)"', f.read()).group(1)
-
-
-def avatar(t, photo, x, y, scale):
-    g0, g1, g2 = t["grad"]
-    return f"""<g transform="translate({x},{y}) scale({scale})">
-  <defs>
-    <clipPath id="hex"><polygon points="{HEX}"/></clipPath>
-    <linearGradient id="ring" x1="14" y1="14" x2="122" y2="122" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="{g0}"/><stop offset=".52" stop-color="{g1}"/><stop offset="1" stop-color="{g2}"/>
-      <animateTransform attributeName="gradientTransform" type="rotate" from="0 68 68" to="360 68 68" dur="10s" repeatCount="indefinite"/>
-    </linearGradient>
-    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="2.4" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-  </defs>
-  <polygon points="{HEX}" fill="{t["bg"]}"/>
-  <image href="{photo}" x="-8" y="-12" width="152" height="152" clip-path="url(#hex)" preserveAspectRatio="xMidYMid slice"/>
-  <g><circle cx="68" cy="8" r="3" fill="{g1}"/>
-    <animateTransform attributeName="transform" type="rotate" from="0 68 68" to="360 68 68" dur="12s" repeatCount="indefinite"/></g>
-  <polygon points="{HEX}" fill="none" stroke="url(#ring)" stroke-width="3.2" stroke-linecap="round" stroke-dasharray="32 10" filter="url(#glow)">
-    <animate attributeName="stroke-dashoffset" from="0" to="-168" dur="7s" repeatCount="indefinite"/>
-  </polygon>
-</g>"""
+W, H = 860, 300
+BAR = 40          # title bar height
+CX, CY, R = 706, 158, 84  # harness diagram centre and orbit radius
 
 
 def _timeline(points, dur):
@@ -87,7 +65,7 @@ def _timeline(points, dur):
     return ";".join(f"{k:.4f}" for k in keys), ";".join(f"{merged[k]:.1f}" for k in keys)
 
 
-def typewriter(t, x, y, size=18):
+def typewriter(t, x, y, right, size=18):
     """A '>' prompt that types and erases each phrase in turn.
 
     Uses a monospace font with textLength pinned to 0.6em per character, so
@@ -131,7 +109,6 @@ def typewriter(t, x, y, size=18):
     for tm, i, k in sorted(events):
         shown[i] = k
         edge.append((tm, x0 + sum(shown) * cw))
-    right = 628
     times, xs = _timeline(edge, dur)
     _, ws = _timeline([(tm, right - v) for tm, v in edge], dur)
     start = x0 + len(PHRASES[0]) * cw
@@ -151,38 +128,79 @@ def typewriter(t, x, y, size=18):
     return out
 
 
-def network(t, x0, y0, w, h):
-    """A small MLP diagram with signals travelling along some edges."""
-    layers = [3, 4, 4, 2]
-    nodes = []
-    for li, n in enumerate(layers):
-        x = x0 + li * w / (len(layers) - 1)
-        nodes.append([(x, y0 + (j + .5) * h / n) for j in range(n)])
+def title_bar(t):
+    dots = "".join(f'<circle cx="{24 + i * 18}" cy="{BAR / 2}" r="6" fill="{c}"/>' for i, c in enumerate(LIGHTS))
+    return (
+        f'<path d="M.5 {BAR} V14 A13.5 13.5 0 0 1 14 .5 H{W - 14} A13.5 13.5 0 0 1 {W - .5} 14 V{BAR} Z" fill="{t["chip"]}"/>'
+        f'<line x1=".5" y1="{BAR}" x2="{W - .5}" y2="{BAR}" stroke="{t["border"]}"/>'
+        f'{dots}'
+        f'<text x="{W / 2}" y="{BAR / 2 + 4}" class="mono-sm" text-anchor="middle">ayush@harness: ~/agents</text>'
+    )
 
-    edges = [(a, b) for l in range(len(layers) - 1) for a in nodes[l] for b in nodes[l + 1]]
-    out = ""
-    for (ax, ay), (bx, by) in edges:
-        out += f'<line x1="{ax:.1f}" y1="{ay:.1f}" x2="{bx:.1f}" y2="{by:.1f}" stroke="{t["edge"]}"/>'
-    # A dash longer than the gap would wrap around, so the gap covers the
-    # whole edge: with no animation the dash sits off the end, invisible.
-    for k, ((ax, ay), (bx, by)) in enumerate(edges):
-        if k % 3:
-            continue
-        color = t["grad"][k % 3]
-        out += (
-            f'<line x1="{ax:.1f}" y1="{ay:.1f}" x2="{bx:.1f}" y2="{by:.1f}" stroke="{color}" stroke-width="2" '
-            f'stroke-linecap="round" pathLength="100" stroke-dasharray="10 110" stroke-dashoffset="10">'
-            f'<animate attributeName="stroke-dashoffset" values="10;-100" dur="2.4s" '
-            f'begin="{(k * .37) % 2.4:.2f}s" repeatCount="indefinite"/></line>'
-        )
-    for li, layer in enumerate(nodes):
-        color = t["grad"][min(li, 2)]
-        for j, (x, y) in enumerate(layer):
+
+def _hexagon(cx, cy, r):
+    pts = [(cx + r * math.cos(math.radians(a)), cy + r * math.sin(math.radians(a))) for a in range(-90, 270, 60)]
+    return " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+
+
+def harness(t):
+    """The model at the centre, wired to the harness parts around it."""
+    g0, g1, g2 = t["grad"]
+    out = (
+        # Dot grid fading out from the centre, so it never sits behind text.
+        f'<defs><pattern id="dots" width="16" height="16" patternUnits="userSpaceOnUse">'
+        f'<circle cx="2" cy="2" r="1.2" fill="{t["dot"]}"/></pattern>'
+        f'<radialGradient id="fade"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>'
+        f'<mask id="fadeMask"><circle cx="{CX}" cy="{CY}" r="{R + 50}" fill="url(#fade)"/></mask></defs>'
+        f'<rect x="{CX - R - 60}" y="{BAR + 1}" width="{2 * R + 120}" height="{H - BAR - 2}" fill="url(#dots)" mask="url(#fadeMask)"/>'
+        # Orbit: dashed ring turning slowly, with a comet riding it.
+        f'<circle cx="{CX}" cy="{CY}" r="{R}" fill="none" stroke="{t["edge"]}" stroke-width="1.5" stroke-dasharray="4 7">'
+        f'<animateTransform attributeName="transform" type="rotate" from="0 {CX} {CY}" to="360 {CX} {CY}" dur="40s" repeatCount="indefinite"/></circle>'
+        f'<circle r="3.5" fill="{g1}"><animateMotion dur="9s" repeatCount="indefinite" '
+        f'path="M{CX},{CY - R} a{R},{R} 0 1,1 0,{2 * R} a{R},{R} 0 1,1 0,{-2 * R}"/></circle>'
+    )
+
+    sats = []
+    for i, label in enumerate(HARNESS):
+        a = math.radians(-45 + i * 90)
+        sats.append((label, CX + R * math.cos(a), CY + R * math.sin(a), t["grad"][i % 3]))
+
+    # Spokes, with a signal running out to each part and back.
+    for i, (_, x, y, color) in enumerate(sats):
+        out += f'<line x1="{CX}" y1="{CY}" x2="{x:.1f}" y2="{y:.1f}" stroke="{t["edge"]}" stroke-width="1.5"/>'
+        for k, (x1, y1, x2, y2) in enumerate(((CX, CY, x, y), (x, y, CX, CY))):
             out += (
-                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="6" fill="{t["bg"]}" stroke="{color}" stroke-width="2">'
-                f'<animate attributeName="r" values="6;7.5;6" dur="2.4s" begin="{(li * .5 + j * .3) % 2.4:.2f}s" '
-                f'repeatCount="indefinite"/></circle>'
+                f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" stroke="{color}" stroke-width="2.5" '
+                f'stroke-linecap="round" pathLength="100" stroke-dasharray="14 120" stroke-dashoffset="14">'
+                f'<animate attributeName="stroke-dashoffset" values="14;-100;-100" keyTimes="0;.5;1" dur="3.2s" '
+                f'begin="{i * .8 + k * 1.6:.1f}s" repeatCount="indefinite"/></line>'
             )
+
+    # Core: the model, with a ping ring and a turning gradient outline.
+    hexa = _hexagon(CX, CY, 34)
+    out += (
+        f'<circle cx="{CX}" cy="{CY}" r="34" fill="none" stroke="{g0}" stroke-width="1.5" opacity="0">'
+        f'<animate attributeName="r" values="34;60" dur="3s" repeatCount="indefinite"/>'
+        f'<animate attributeName="opacity" values=".6;0" dur="3s" repeatCount="indefinite"/></circle>'
+        f'<linearGradient id="core" x1="{CX - 34}" y1="{CY - 34}" x2="{CX + 34}" y2="{CY + 34}" gradientUnits="userSpaceOnUse">'
+        f'<stop offset="0" stop-color="{g0}"/><stop offset=".5" stop-color="{g1}"/><stop offset="1" stop-color="{g2}"/>'
+        f'<animateTransform attributeName="gradientTransform" type="rotate" from="0 {CX} {CY}" to="360 {CX} {CY}" dur="8s" repeatCount="indefinite"/>'
+        f'</linearGradient>'
+        f'<polygon points="{hexa}" fill="{t["chip"]}" stroke="url(#core)" stroke-width="3" stroke-linejoin="round"/>'
+        f'<text x="{CX}" y="{CY + 6}" class="core" text-anchor="middle" style="fill:url(#core)">LLM</text>'
+    )
+
+    # Harness parts: pill labels that light up as their signal arrives.
+    for i, (label, x, y, color) in enumerate(sats):
+        w = len(label) * 6.9 + 22
+        out += (
+            f'<g><rect x="{x - w / 2:.1f}" y="{y - 12:.1f}" width="{w:.1f}" height="24" rx="12" '
+            f'fill="{t["chip"]}" stroke="{color}" stroke-width="1.5"/>'
+            f'<rect x="{x - w / 2:.1f}" y="{y - 12:.1f}" width="{w:.1f}" height="24" rx="12" fill="{color}" opacity="0">'
+            f'<animate attributeName="opacity" values="0;.22;0;0" keyTimes="0;.15;.4;1" dur="3.2s" '
+            f'begin="{i * .8 + .9:.1f}s" repeatCount="indefinite"/></rect>'
+            f'<text x="{x:.1f}" y="{y + 4:.1f}" class="sat" text-anchor="middle" textLength="{len(label) * 6.9:.1f}">{escape(label)}</text></g>'
+        )
     return out
 
 
@@ -206,18 +224,21 @@ def chips(t, y):
     return out
 
 
-def hero_svg(t, photo):
+def hero_svg(t):
     g0, g1, g2 = t["grad"]
-    tx = 222
+    tx = 44
     name_w = 330
     return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-label="{NAME}, {ROLE}: {escape(', '.join(PHRASES))}">
 <title>{NAME}, {ROLE}</title>
 <style>
   text {{ font-family: {SANS}; fill: {t["fg"]}; }}
   .hi {{ font-size: 18px; fill: {t["muted"]}; }}
-  .name {{ font-size: 50px; font-weight: 800; letter-spacing: -1px; }}
+  .name {{ font-size: 52px; font-weight: 800; letter-spacing: -1px; }}
   .role {{ font-size: 19px; font-weight: 600; }}
   .mono {{ font-family: {MONO}; font-size: 18px; }}
+  .mono-sm {{ font-family: {MONO}; font-size: 12px; fill: {t["muted"]}; }}
+  .core {{ font-family: {MONO}; font-size: 17px; font-weight: 700; }}
+  .sat {{ font-size: 12px; font-weight: 600; }}
   .chip-label {{ font-size: 10px; font-weight: 700; text-transform: uppercase; }}
   .chip {{ font-size: 11.5px; fill: {t["muted"]}; }}
   .cursor {{ animation: blink 1s steps(1) infinite; }}
@@ -232,35 +253,29 @@ def hero_svg(t, photo):
     <stop offset="0" stop-color="{g0}"/><stop offset=".33" stop-color="{g1}"/><stop offset=".66" stop-color="{g2}"/><stop offset="1" stop-color="{g0}"/>
     <animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="{name_w} 0" dur="8s" repeatCount="indefinite"/>
   </linearGradient>
-  <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="{g0}"/><stop offset=".5" stop-color="{g1}"/><stop offset="1" stop-color="{g2}"/>
-  </linearGradient>
 </defs>
-<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="16" fill="{t["bg"]}" stroke="{t["border"]}"/>
-<rect x="24" y=".5" width="{W - 48}" height="2" rx="1" fill="url(#accent)"/>
+<rect x=".5" y=".5" width="{W - 1}" height="{H - 1}" rx="14" fill="{t["bg"]}" stroke="{t["border"]}"/>
+{title_bar(t)}
 
-<g class="rise">{avatar(t, photo, 36, 40, 1.12)}</g>
+<g class="rise" style="animation-delay:.3s">{harness(t)}</g>
 
-<g class="rise" style="animation-delay:.15s">
-  <text x="{tx}" y="74" style="font-size:20px">👋<animateTransform attributeName="transform" type="rotate" dur="2.4s" repeatCount="3"
-    values="0 {tx + 14} 70;16 {tx + 14} 70;-8 {tx + 14} 70;16 {tx + 14} 70;-8 {tx + 14} 70;0 {tx + 14} 70;0 {tx + 14} 70" keyTimes="0;.1;.2;.3;.4;.6;1"/></text>
-  <text x="{tx + 30}" y="74" class="hi">Hi there, I'm</text>
-  <text x="{tx}" y="128" class="name" style="fill:url(#nameGrad)">{NAME}</text>
-  <text x="{tx}" y="160" class="role">{ROLE}</text>
+<g class="rise" style="animation-delay:.1s">
+  <text x="{tx}" y="86" style="font-size:20px">👋<animateTransform attributeName="transform" type="rotate" dur="2.4s" repeatCount="3"
+    values="0 {tx + 14} 82;16 {tx + 14} 82;-8 {tx + 14} 82;16 {tx + 14} 82;-8 {tx + 14} 82;0 {tx + 14} 82;0 {tx + 14} 82" keyTimes="0;.1;.2;.3;.4;.6;1"/></text>
+  <text x="{tx + 30}" y="86" class="hi">Hi there, I'm</text>
+  <text x="{tx}" y="142" class="name" style="fill:url(#nameGrad)">{NAME}</text>
+  <text x="{tx}" y="174" class="role">{ROLE}</text>
 </g>
-<g class="rise" style="animation-delay:.3s">{typewriter(t, tx, 196)}</g>
+<g class="rise" style="animation-delay:.2s">{typewriter(t, tx, 212, right=580)}</g>
 
-<g class="rise" style="animation-delay:.4s">{network(t, 640, 46, 176, 168)}</g>
-
-{chips(t, 236)}
+{chips(t, 252)}
 </svg>"""
 
 
 def main():
-    photo = _photo()
     for name, t in THEMES.items():
         with open(os.path.join(ASSETS, f"hero-{name}.svg"), "w") as f:
-            f.write(hero_svg(t, photo))
+            f.write(hero_svg(t))
     print("Hero banners generated")
 
 
