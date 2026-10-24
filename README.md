@@ -34,10 +34,10 @@ I'm an AI Engineer at [CogKnowEdge Solutions](https://github.com/CogKnowEdge-Sol
   </picture>
 </a>
 
-<a href="https://github.com/AyushSinghRana15/NexApply">
+<a href="https://github.com/AyushSinghRana15/Financial-Risk-Management-System">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/project-nexapply-dark.svg" />
-    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/project-nexapply-light.svg" width="100%" alt="NexApply: real-time job application agent that tailors resumes and applies with Playwright workers" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/project-finrisk-dark.svg" />
+    <img src="https://raw.githubusercontent.com/AyushSinghRana15/AyushSinghRana15/main/assets/project-finrisk-light.svg" width="100%" alt="FinRisk: AI-powered financial risk management with credit scoring, ML Value-at-Risk, portfolio tracking and an AI chatbot" />
   </picture>
 </a>
 
