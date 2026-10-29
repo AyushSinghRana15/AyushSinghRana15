@@ -91,8 +91,6 @@ I'm an AI Engineer at [CogKnowEdge Solutions](https://github.com/CogKnowEdge-Sol
   </a>
 </p>
 
-<p align="center"><sub>Cards are generated daily by a GitHub Action · click any card to explore</sub></p>
-
 <p align="center">
   <i>"I don't always test my code, but when I do, I do it in production."</i>
 </p>
